@@ -24,5 +24,12 @@ async def receive_incoming(req, resp):
     id = db.insert_checkout(conn,tag=data['tag'])
     resp.media = {"id":id}
 
-print(listen_ip)
+@api.route("/")
+def landing_html(req, resp):
+    resp.html = api.template('index.html')
+
+@api.route("/register")
+def register(req,resp):
+    resp.html = api.template('newuser.html')    
+
 api.run(address=listen_ip,port=listen_port)
