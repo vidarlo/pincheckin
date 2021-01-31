@@ -1,0 +1,7 @@
+CREATE TABLE "" (
+	"id"	INTEGER NOT NULL UNIQUE,
+	"tag"	TEXT,
+	"checkin"	INTEGER,
+	"checkout"	INTEGER,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
