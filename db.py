@@ -23,7 +23,7 @@ def insert_checkin(conn, tag):
     :param conn: SQL Connection
     :return: ID of row inserted
     """
-    userid = get_userid(conn,tag)
+    userid = get_userid(conn,tag.upper())
     if userid > 0:
         time_stamp = int(time.time())
         sql = '''INSERT INTO checkins(user, checkin) VALUES(?,?)'''
@@ -43,7 +43,7 @@ def insert_checkout(conn, tag):
     :param conn: SQL Connection
     :return: ID of row inserted
     """
-    userid = get_userid(conn,tag)
+    userid = get_userid(conn,tag.upper())
     if userid > 0:
         time_stamp = int(time.time())
         #Get last row of user
@@ -74,7 +74,7 @@ def new_user(conn, tag, email,phone):
     sql = '''INSERT INTO users(tag,email,phone) VALUES(?,?,?) '''
     try:
         cur = conn.cursor()
-        cur.execute(sql, (tag, email, phone))
+        cur.execute(sql, (tag.upper(), email, phone))
         conn.commit()
         return cur.lastrowid
     except sqlite3.IntegrityError:
@@ -93,7 +93,7 @@ def get_userid(conn,tag):
     sql = '''SELECT id FROM users WHERE tag=?'''
     try:
         cur = conn.cursor()
-        cur.execute(sql, (tag,))
+        cur.execute(sql, (tag.upper(),))
         return cur.fetchone()[0]
     except:
         return -1
