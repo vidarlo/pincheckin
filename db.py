@@ -1,7 +1,7 @@
 import sqlite3
-from config import DBFile
+import time
 
-db_file = DBFile()
+
 def create_connection(db_file):
     """ Create a connection to sqllite that we can use.
     :param db_file: specifies database file.
@@ -20,9 +20,43 @@ def insert_checkin(conn, tag):
     Inserts new tag into checkin.
     :param tag: Tag for user to insert
     :param conn: SQL Connection
-    :return: True on insert
+    :return: ID of row inserted
     """
-    sql = '''INSERT INTO '''
+    userid = get_userid(conn,tag)
+    if userid > 0:
+        time_stamp = int(time.time())
+        sql = '''INSERT INTO checkins(user, checkin) VALUES(?,?)'''
+        try:
+            cur = conn.cursor()
+            cur.execute(sql, (userid, time_stamp))
+            conn.commit()
+            return cur.lastrowid
+        except:
+            return None
+
+def insert_checkout(conn, tag):
+    """
+    Inserts new tag into checkin.
+    :param tag: Tag for user to insert
+    :param conn: SQL Connection
+    :return: ID of row inserted
+    """
+    userid = get_userid(conn,tag)
+    if userid > 0:
+        time_stamp = int(time.time())
+        #Get last row of user
+        lr_sql = '''SELECT id FROM checkins WHERE user=? ORDER BY id DESC limit 1'''
+        
+        up_sql = '''UPDATE checkins SET checkout=? WHERE id=?'''
+        try:
+            cur = conn.cursor()
+            cur.execute(lr_sql, (userid,))
+            checkin_id = cur.fetchone()[0]
+            cur.execute(up_sql, (time_stamp, userid))
+            conn.commit()
+            return cur.lastrowid
+        except:
+            return None
 
 def new_user(conn, tag, email,phone):
     """
@@ -38,9 +72,8 @@ def new_user(conn, tag, email,phone):
     try:
         cur = conn.cursor()
         cur.execute(sql, (tag, email, phone))
+        conn.commit()
         return cur.lastrowid
-        cur.commit()
-
     except sqlite3.IntegrityError:
         return -1
     else:
@@ -53,7 +86,7 @@ def get_userid(conn,tag):
     :param tag: User tag
     :return id: User ID or -1 for unknown user
     """
-    sql '''SELECT id FROM users WHERE tag=?"'''
+    sql = '''SELECT id FROM users WHERE tag=?'''
     try:
         cur = conn.cursor()
         cur.execute(sql, (tag,))
