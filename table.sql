@@ -9,6 +9,8 @@ CREATE TABLE "checkins" (
 CREATE TABLE "users" (
 	"id"	INTEGER NOT NULL UNIQUE,
 	"email"	TEXT,
-	"tag"	TEXT UNIQUE,
+	"tag"	TEXT NOT NULL UNIQUE,
+	"phone" TEXT,
+	"name" TEXT,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
