@@ -13,6 +13,7 @@ def create_connection(db_file):
         return conn
     except Error as e:
         print(e)
+        raise
         return None
     
 def insert_checkin(conn, tag):
@@ -32,6 +33,7 @@ def insert_checkin(conn, tag):
             conn.commit()
             return cur.lastrowid
         except:
+            raise
             return None
 
 def insert_checkout(conn, tag):
@@ -56,6 +58,7 @@ def insert_checkout(conn, tag):
             conn.commit()
             return cur.lastrowid
         except:
+            raise
             return None
 
 def new_user(conn, tag, email,phone):
@@ -77,6 +80,7 @@ def new_user(conn, tag, email,phone):
     except sqlite3.IntegrityError:
         return -1
     else:
+        raise
         return -2
         
 def get_userid(conn,tag):
