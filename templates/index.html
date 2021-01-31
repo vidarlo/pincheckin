@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>Registering new users in pincheckin</title>
+    <title>Logging in users in pincheckin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="form.js"></script> <!-- load our javascript file -->
@@ -22,12 +22,11 @@ $("#formoid").submit(function(event) {
   var $form = $(this),
     url = $form.attr('action');
 
-  /* Send the data using post with element id name, gamer-tag, phone and email*/
+  /* Send the data using post with element id gamer-tag*/
   var posting = $.post(url, {
-    name: $('#name').val(),
+   
     gamer-tag: $('#gamer-tag').val()
-    phone: $('phone').val()
-    email: $('#email').val()
+   
   });
 
   /* Alerts the results */
@@ -52,7 +51,7 @@ $("#formoid").submit(function(event) {
 
 
 
- <form id="formoid" action="index.html" title="" method="post">
+ <form id="formoid" action="" title="" method="post">
 
 
   <!-- GAMER TAG -->
@@ -64,37 +63,18 @@ $("#formoid").submit(function(event) {
 
  <br>
 
-        <!-- NAME -->
-        <div id="name-group" class="form-group">
-           
-            <input type="text" class="form-control" name="name" placeholder="Navn">
-            <!-- errors will go here -->
-        </div>
-
-<br>
-
-        <!-- EMAIL -->
-        <div id="email-group" class="form-group">
-           
-            <input type="text" class="form-control" name="email" placeholder="E-post">
-            <!-- errors will go here -->
-        </div>
-
-<br>
-
-        <!-- PHONE -->
-        <div id="phone-group" class="form-group">
-           
-            <input type="text" class="form-control" name="phone" placeholder="Telefonnummer">
-            <!-- errors will go here -->
-        </div>
-
- <br>
+       
       
 
-        <button type="submit" class="btn btn-success">Send inn! <span class="fa fa-arrow-right"></span></button>
-
+        <button type="submit" class="btn btn-success">Kjør på!<span class="fa fa-arrow-right"></span></button>
+       
     </form>
+
+    <br>
+
+    <form action="newuser.html">
+    <button type="submit" class="btn btn-success">Ny bruker!<span class="fa fa-arrow-right"></span></button>
+</form>
 
 </div>
 </body>
