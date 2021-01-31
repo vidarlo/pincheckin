@@ -54,7 +54,7 @@ def insert_checkout(conn, tag):
             cur = conn.cursor()
             cur.execute(lr_sql, (userid,))
             checkin_id = cur.fetchone()[0]
-            cur.execute(up_sql, (time_stamp, userid))
+            cur.execute(up_sql, (time_stamp, checkin_id))
             conn.commit()
             return cur.lastrowid
         except:
