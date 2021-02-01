@@ -17,6 +17,7 @@
 import responder
 import config
 import db
+import os
 
 listen_ip = config.listen_ip()
 listen_port = config.listen_port()
@@ -64,5 +65,25 @@ async def list(req, resp):
     
     response = db.get_entries(conn,start = start, count=count)
     resp.media = response
+
+@api.route("/list/csv")
+async def list(req, resp):
+    data = await req.media()
+    start = None
+    count = None
+    try:
+        start = int(data['start'])
+    except:
+        start = 0
+    try:
+        count = int(data['count'])
+    except:
+        count = 25;
+    resp.headers['Content-Type'] = 'text/csv'
+    response = db.get_entries(conn,start = start, count=count)
+    csv = 'Tag, Checkin, Checkout\n'
+    for row in response:
+        csv += row[0]+", "+str(row[1])+", "+str(row[2])+'\n'
+    resp.text = csv
     
 api.run(address=listen_ip,port=listen_port)
