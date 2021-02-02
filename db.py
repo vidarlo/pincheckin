@@ -77,20 +77,21 @@ def insert_checkout(conn, tag):
             raise
             return None
 
-def new_user(conn, tag, email,phone):
+def new_user(conn, tag, email,phone, name):
     """
     Create new user in users table
     :param conn: SQL Connection
     :param tag: User tag
     :param email: User e-mail
+    :param name: User's name
     :param phone: User phone number
     :param phone: User phone number
     :return id: ID of user created. -1 means duplicate tag. -2 other error.
     """
-    sql = '''INSERT INTO users(tag,email,phone) VALUES(?,?,?) '''
+    sql = '''INSERT INTO users(tag,email,phone, name) VALUES(?,?,?,?) '''
     try:
         cur = conn.cursor()
-        cur.execute(sql, (tag.upper(), email, phone))
+        cur.execute(sql, (tag.upper(), email, phone, name))
         conn.commit()
         return cur.lastrowid
     except sqlite3.IntegrityError:

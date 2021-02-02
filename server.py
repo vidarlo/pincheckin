@@ -18,6 +18,8 @@ import responder
 import config
 import db
 import os
+import time
+import json
 
 listen_ip = config.listen_ip()
 listen_port = config.listen_port()
@@ -47,7 +49,22 @@ def landing_html(req, resp):
 
 @api.route("/register")
 def register(req,resp):
-    resp.html = api.template('newuser.html')    
+    resp.html = api.template('newuser.html')
+
+@api.route("/register/add")
+async def register(req,resp):
+    data = await req.media()
+    try:
+        if data['name'] and data['tag'] and data['email'] and data['phone']:
+            resp.text = str(db.new_user(conn,
+                                        data['tag'],
+                                        data['email'],
+                                        data['phone'],
+                                        data['name']))
+    except:
+        raise
+        resp.text = "-3"
+
 
 @api.route("/list")
 async def list(req, resp):
@@ -64,7 +81,6 @@ async def list(req, resp):
         count = 25;
     
     response = db.get_entries(conn,start = start, count=count)
-    resp.media = response
 
 @api.route("/list/csv")
 async def list(req, resp):
@@ -83,7 +99,7 @@ async def list(req, resp):
     response = db.get_entries(conn,start = start, count=count)
     csv = 'Tag, Checkin, Checkout\n'
     for row in response:
-        csv += row[0]+", "+str(row[1])+", "+str(row[2])+'\n'
+        csv += row[0]+", "+str(time.ctime(row[1]))+", "+str(time.ctime(row[2]))+'\n'
     resp.text = csv
     
 api.run(address=listen_ip,port=listen_port)
