@@ -1,0 +1,43 @@
+body{
+	  background-color: black;
+}
+table.visits{
+	text-align: left;
+	border-spacing: 1em 0em;
+	border-collapse: separate;
+	color: #FFFF00;
+	padding-top:1%;
+	font-size: 2em;
+	float: left;
+  }
+  div.back{
+  float: left;
+  height: 3em;
+  width: 3em;
+  left: 1em;
+  }
+  .back img{
+  height: 100%;
+  width: 100%;
+  }
+
+h1{
+	color: #FFFF00;
+	font-size: 2.5em;
+	float: left;
+	padding-left: 1.5em;
+}
+
+input.form-control{
+	font-size: 2em;
+	width: 60%;
+	background: gray;
+	color: #FFFF00;
+	padding-top: 0.3em;
+	}
+
+button.btn{
+	font-size: 2em;
+	background: gray;
+	color: #FFFF00;
+	}

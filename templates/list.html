@@ -1,0 +1,28 @@
+
+<html>
+<head>
+<title>Besøk</title>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="back">
+    <a href="{{ url_for('index') }}">
+    <img src="{{ url_for('static', filename='back.svg') }}" />
+    </a>
+  </div>
+<table id="player" class="visits">
+<thead><th>Tag</th><th>From</th><th>To</th></thead>
+<tbody>
+{% for checkin in visits %}
+<tr>
+  <td>{{ checkin[0] }}</td>
+  <td>{{ checkin[1] | formattime }}</td>
+  <td>{{ checkin[2] | formattime }}</td>
+  </tr>
+{% endfor %}
+</tbody>
+
+</table>        
+</body>
+</html>
