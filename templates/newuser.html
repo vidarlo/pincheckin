@@ -20,9 +20,9 @@
     <form id="form" action="{{ url_for('adduser') }}" title="" method="post">
       <div id="tag" class="registerform">
 	<p>
-        <input type="text" class="form-control" name="tag" placeholder="TAG (tre bokstaver)">
-        <input type="text" class="form-control" name="name" placeholder="Navn">
-        <input type="text" class="form-control" name="email" placeholder="E-post">
+        <input type="text" maxlength="3" style="text-transform:uppercase" class="form-control" name="tag" placeholder="TAG (tre bokstaver)">
+        <input type="text" style="text-transform:capitalize" class="form-control" name="name" placeholder="Navn">
+        <input type="text" style="text-transform:lowercase" class="form-control" name="email" placeholder="E-post">
         <input type="text" class="form-control" name="phone" placeholder="Telefonnummer">
     </p>
 	<div>
