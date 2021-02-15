@@ -3,22 +3,14 @@
 <head>
 <title>Besøk</title>
 <meta charset="utf-8"/>
- <style>
-  body{
-	background-color: black;
-}
-table.visits{
-	text-align: left;
-	border-spacing: 1em 0em;
-	border-collapse: separate;
-	color: yellow;
-	padding-top:1%;
-	font-size: 2em;
-	float: left;
-  }
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  <div class="back">
+    <a href="{{ url_for('index') }}">
+    <img src="{{ url_for('static', filename='back.svg') }}" />
+    </a>
+  </div>
 <table id="player" class="visits">
 <thead><th>Tag</th><th>From</th><th>To</th></thead>
 <tbody>

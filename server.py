@@ -54,8 +54,8 @@ def checkout():
         return -1
 
 @api.route("/")
-def landing_html(req, resp):
-    resp.html = api.template('index.html')
+def index():
+    return render_template('index.html')
 
 #@api.route("/register")
 #def register(req,resp):
