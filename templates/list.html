@@ -1,0 +1,36 @@
+
+<html>
+<head>
+<title>Besøk</title>
+<meta charset="utf-8"/>
+ <style>
+  body{
+	background-color: black;
+}
+table.visits{
+	text-align: left;
+	border-spacing: 1em 0em;
+	border-collapse: separate;
+	color: yellow;
+	padding-top:0%;
+	font-size: 1em;
+	float: left;
+  }
+</style>
+</head>
+<body>
+<table id="player" class="visits">
+<thead><th>Tag</th><th>From</th><th>To</th></thead>
+<tbody>
+{% for checkin in visits %}
+<tr>
+  <td>{{ checkin[0] }}</td>
+  <td>{{ format(datetime.datetime.fromtimestamp(checkin[1]))  }}</td>
+  <td>{{ checkin[2] }}</td>
+  </tr>
+{% endfor %}
+</tbody>
+
+</table>        
+</body>
+</html>

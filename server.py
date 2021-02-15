@@ -20,6 +20,7 @@ import db
 import os
 import time
 import json
+import datetime
 
 listen_ip = config.listen_ip()
 listen_port = config.listen_port()
@@ -65,22 +66,18 @@ async def register(req,resp):
         raise
         resp.text = "-3"
 
+#@api.template_filter('humantime')
+#def humantime(s):
+#    return format(datetime.datetime.fromtimestamp(s))
 
 @api.route("/list")
 async def list(req, resp):
-    data = await req.media()
-    start = None
-    count = None
-    try:
-        start = int(data['start'])
-    except:
-        start = 0
-    try:
-        count = int(data['count'])
-    except:
-        count = 25;
+    start = 0
+    count = 25
+    visits = db.get_entries(conn,start = start, count=count)
+    #resp.media = response
+    resp.html = api.template('list.html', visits = visits)
     
-    response = db.get_entries(conn,start = start, count=count)
 
 @api.route("/list/csv")
 async def list(req, resp):
