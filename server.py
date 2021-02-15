@@ -57,23 +57,23 @@ def checkout():
 def index():
     return render_template('index.html')
 
-#@api.route("/register")
-#def register(req,resp):
-#    resp.html = api.template('newuser.html')
+@api.route("/register")
+def register():
+    return render_template('newuser.html')
 
-#@api.route("/register/add")
-#async def register(req,resp):
-#    data = await req.media()
-#    try:
-#        if data['name'] and data['tag'] and data['email'] and data['phone']:
-#            resp.text = str(db.new_user(conn,
-#                                        data['tag'],
-#                                        data['email'],
-#                                        data['phone'],
-#                                        data['name']))
-#    except:
-#        raise
-#        resp.text = "-3"
+@api.route("/register/add",methods=['POST'])
+def adduser():
+    try:
+        conn=db.create_connection(config.DBFile())
+        if request.form['name'] and request.form['tag'] and request.form['email'] and request.form['phone']:
+            resp.text = str(db.new_user(conn,
+                                        request.form['tag'],
+                                        request.form['email'],
+                                        request.form['phone'],
+                                        request.form['name']))
+    except:
+        raise
+    
 
 @api.template_filter('formattime')
 def formattime_filter(s,format="%H:%M %d. %b"):
