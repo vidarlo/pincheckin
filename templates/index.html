@@ -6,37 +6,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
    
 
-
-
-
-<script type="text/javascript">
-/* attach a submit handler to the form */
-$("#formoid").submit(function(event) {
-
-  /* stop form from submitting normally */
-  event.preventDefault();
-
-  /* get the action attribute from the <form action=""> element */
-  var $form = $(this),
-    url = $form.attr('action');
-
-  /* Send the data using post with element id gamer-tag*/
-  var posting = $.post(url, {
-   
-    gamer-tag: $('#gamer-tag').val()
-   
-  });
-
-  /* Alerts the results */
-  posting.done(function(data) {
-    $('#result').text('success');
-  });
-  posting.fail(function() {
-    $('#result').text('failed');
-  });
-});
-</script> 
-
 </head>
 <body>
 <div class="col text-center">
@@ -57,7 +26,7 @@ $("#formoid").submit(function(event) {
 
 
 
- <form id="formoid" action="" title="" method="post">
+ <form id="formoid" action="{{ url_for('checkin') }}" title="" method="post">
 
 
   <!-- GAMER TAG -->
@@ -70,7 +39,7 @@ $("#formoid").submit(function(event) {
                 display: inline-block;
                 float: none;
                 margin: 0 auto"
-                 class="form-control col-xs-2" name="gamer-tag" placeholder="TAG (tre bokstaver)">
+                 class="form-control col-xs-2" name="tag" placeholder="TAG (tre bokstaver)">
             <!-- errors will go here -->
         </div>
     
