@@ -31,14 +31,15 @@
 
   <!-- GAMER TAG -->
     
-        <div id="gamer-tag-group" class="form-group col-xs-2" >
+        <div id="gamer-tag-group" class="form-group form-group-lg" >
             
             <input type="text" maxlength="3" style="
                 text-transform:uppercase;
                 text-align: center;
                 display: inline-block;
                 float: none;
-                margin: 0 auto"
+                margin: 0 auto;
+                width: auto;"
                  class="form-control col-xs-2" name="tag" placeholder="TAG (tre bokstaver)">
             <!-- errors will go here -->
         </div>
@@ -48,18 +49,18 @@
        
       
       
-          <div class="btn btn-success">
-          <input type ="submit" name="action" value="Logg inn">
+          <div class="btn btn-success" style="margin:20px">
+          <input type ="submit" class="btn btn-success" name="action" value="Checkin">Logg inn
       </div>
-      <div class="btn btn-failure">
-          <input type ="submit" name="action" value="Logg ut">
+      <div class="btn btn-danger">
+          <input type ="submit" class="btn btn-danger" name="action" value="Checkout">
       </div>
     </form>
 
     <br>
 
     <form action="{{ url_for('register') }}">
-    <button type="submit" class="btn btn-success">Ny bruker!<span class="fa fa-arrow-right"></span></button>
+    <button type="submit" class="btn btn-primary">Ny bruker!<span class="fa fa-arrow-right"></span></button>
 </form>
 
 
