@@ -36,26 +36,25 @@ def ping():
 
 @api.route("/checkin", methods=['POST'])
 def checkin():
-    try:
-        conn=db.create_connection(config.DBFile())
-        id = db.insert_checkin(conn,tag=request.form['tag'])
-        name = db.get_name(conn,request.form['tag'])
-        conn.close()
-        return render_template('checkin.html', tag=request.form['tag'], name=name)
-    except:
-        return render_template('checkin.html', fault=True)
-
-@api.route("/checkout")
-def checkout():
-    try:
-        conn=db.create_connection(config.DBFile())
-        id = db.insert_checkout(conn,tag=request.form['tag'])
-        name = db.get_name(conn,request.form['tag'])
-        conn.close()
-        return render_template('checkin.html', tag=request.form['tag'], name=name)
-    except:
-        return render_template('checkin.html', fault=true)
-
+    if request.form['action'] == "Checkin":
+        try:
+            conn=db.create_connection(config.DBFile())
+            id = db.insert_checkin(conn,tag=request.form['tag'])
+            name = db.get_name(conn,request.form['tag'])
+            conn.close()
+            return render_template('message.html', message="You're checked in, "+request.form['tag'])
+        except:
+            return render_template('checkin.html', fault=True)
+    elif request.form['action'] == "Checkout":
+        try:
+            conn=db.create_connection(config.DBFile())
+            id = db.insert_checkout(conn,tag=request.form['tag'])
+            name = db.get_name(conn,request.form['tag'])
+            conn.close()
+            return render_template('message.html', message="You're checked out, "+request.form['tag'])
+        except:
+            return render_template('message.html', message="Ooops, something didn't work")
+        
 @api.route("/")
 def index():
     return render_template('index.html')
