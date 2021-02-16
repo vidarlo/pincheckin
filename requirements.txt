@@ -1,3 +1,2 @@
-responder
-#sqlite3
+flask
 configparser

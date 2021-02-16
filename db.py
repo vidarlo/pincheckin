@@ -30,7 +30,7 @@ def create_connection(db_file):
     except Error as e:
         print(e)
         raise
-        return None
+
     
 def insert_checkin(conn, tag):
     """
@@ -114,6 +114,21 @@ def get_userid(conn,tag):
         return cur.fetchone()[0]
     except:
         return -1
+
+def get_name(conn,tag):
+    """
+    Get user name from tag
+    :param conn: SQL Connection
+    :param tag: User tag
+    :return name: User ID or -1 for unknown user
+    """
+    sql = '''SELECT name FROM users WHERE tag=?'''
+    try:
+        cur = conn.cursor()
+        cur.execute(sql, (tag.upper(),))
+        return cur.fetchone()[0]
+    except:
+        return -1
     
 def get_entries(conn,start = 0,count = 25):
     """
@@ -122,7 +137,7 @@ def get_entries(conn,start = 0,count = 25):
     :param start: Start point (default:0)
     :param count: number to get (default: 25)
     """
-    sql = '''SELECT users.tag,checkins.checkin,checkins.checkout FROM checkins INNER JOIN users on users.id = checkins.user ORDER BY checkins.checkout DESC LIMIT ?,?'''
+    sql = '''SELECT users.tag,checkins.checkin,checkins.checkout FROM checkins INNER JOIN users on users.id = checkins.user ORDER BY checkins.id DESC LIMIT ?,?'''
     try:
         cur = conn.cursor()
         cur.execute(sql, (start,count))

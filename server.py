@@ -31,27 +31,27 @@ api = Flask(__name__)
 
 @api.route("/ping")
 def ping():
-    return "pong"
+    return render_template('message.html', message="pong")
 
-#@api.route("/checkin")
-#async def receive_incoming(req, resp):
-#    data = await req.media()
-#    id = db.insert_checkin(conn,tag=data['tag'])
-#    resp.media = {"id":id}
-
-#@api.route("/checkout")
-#async def receive_incoming(req, resp):
-#    data = await req.media()
-#    id = db.insert_checkout(conn,tag=data['tag'])
-#    resp.media = {"id":id}
+@api.route("/checkin")
+def checkin():
+    try:
+        conn=db.create_connection(config.DBFile())
+        id = db.insert_checkin(conn,tag=request.form['tag'])
+        name = db.get_name(conn,request.form['tag'])
+        return render_template('checkin.html', tag=request.form['tag'], name=name)
+    except:
+        return render_template('checkin.html', fault=true)
 
 @api.route("/checkout")
 def checkout():
-    if request.method == 'POST':
-        id = db.insert_checkout(conn, tag=request.form['tag'])
-        return id
-    else:
-        return -1
+    try:
+        conn=db.create_connection(config.DBFile())
+        id = db.insert_checkout(conn,tag=request.form['tag'])
+        name = db.get_name(conn,request.form['tag'])
+        return render_template('checkin.html', tag=request.form['tag'], name=name)
+    except:
+        return render_template('checkin.html', fault=true)
 
 @api.route("/")
 def index():
@@ -66,14 +66,24 @@ def adduser():
     try:
         conn=db.create_connection(config.DBFile())
         if request.form['name'] and request.form['tag'] and request.form['email'] and request.form['phone']:
-            resp.text = str(db.new_user(conn,
-                                        request.form['tag'],
-                                        request.form['email'],
-                                        request.form['phone'],
-                                        request.form['name']))
+            retval = db.new_user(conn,
+                                 request.form['tag'],
+                                 request.form['email'],
+                                 request.form['phone'],
+                                 request.form['name'])
+            if retval == -1:
+                return render_template('message.html', message="Are you sure you're not already registered?")
+            elif retval == -2:
+                return render_template('message.html', message="Something went wrong, try again later")
+            else:
+                return render_template('message.html',
+                                       message="Welcome, " + request.form['tag'])
+        else:
+            return render_template('message.html', message="Missing some items...")
     except:
-        raise
-    
+        return render_template('message.html',
+                               message="Something wrong happened!<br />Already registered?")
+
 
 @api.template_filter('formattime')
 def formattime_filter(s,format="%H:%M %d. %b"):
