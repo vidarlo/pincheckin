@@ -23,6 +23,7 @@ import datetime
 from flask import Flask
 from flask import request
 from flask import render_template
+import flask
 
 listen_ip = config.listen_ip()
 listen_port = config.listen_port()
@@ -39,6 +40,7 @@ def checkin():
         conn=db.create_connection(config.DBFile())
         id = db.insert_checkin(conn,tag=request.form['tag'])
         name = db.get_name(conn,request.form['tag'])
+        conn.close()
         return render_template('checkin.html', tag=request.form['tag'], name=name)
     except:
         return render_template('checkin.html', fault=True)
@@ -49,6 +51,7 @@ def checkout():
         conn=db.create_connection(config.DBFile())
         id = db.insert_checkout(conn,tag=request.form['tag'])
         name = db.get_name(conn,request.form['tag'])
+        conn.close()
         return render_template('checkin.html', tag=request.form['tag'], name=name)
     except:
         return render_template('checkin.html', fault=true)
@@ -71,6 +74,7 @@ def adduser():
                                  request.form['email'],
                                  request.form['phone'],
                                  request.form['name'])
+            conn.close()
             if retval == -1:
                 return render_template('message.html', message="Are you sure you're not already registered?")
             elif retval == -2:
@@ -93,27 +97,30 @@ def formattime_filter(s,format="%H:%M %d. %b"):
 def list():
     conn=db.create_connection(config.DBFile())
     visits = db.get_entries(conn,start = 0, count=10)
+    conn.close()
     return render_template('list.html', visits = visits)
-    
 
-#@api.route("/list/csv")
-#async def list(req, resp):
-#    data = await req.media()
-#    start = None
-#    count = None
-#    try:
-#        start = int(data['start'])
-#    except:
-#        start = 0
-#    try:
-#        count = int(data['count'])
-#    except:
-#        count = 25;
-#    resp.headers['Content-Type'] = 'text/csv'
-#    response = db.get_entries(conn,start = start, count=count)
-#    csv = 'Tag, Checkin, Checkout\n'
-#    for row in response:
-#        csv += row[0]+", "+str(time.ctime(row[1]))+", "+str(time.ctime(row[2]))+'\n'
-#    resp.text = csv
+
+@api.route("/list/csv")
+def csv():
+    start = None
+    count = None
+    try:
+        start = int(data['start'])
+    except:
+        start = 0
+    try:
+        count = int(data['count'])
+    except:
+        count = 25;
+    conn=db.create_connection(config.DBFile())
+    response = db.get_entries(conn,start = start, count=count)
+    conn.close()
+    csv = 'Tag, Checkin, Checkout\n'
+    for row in response:
+        csv += row[0]+", "+str(time.ctime(row[1]))+", "+str(time.ctime(row[2]))+'\n'
+    resp = flask.Response(csv)
+    resp.headers['Content-Type'] = 'text/csv'
+    return resp
     
 #api.run(address=listen_ip,port=listen_port)
