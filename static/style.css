@@ -11,16 +11,24 @@ table.visits{
 	float: left;
   }
   div.back{
-  float: left;
-  height: 3em;
-  width: 3em;
-  left: 1em;
+    float: left;
+     height: 3em;
+     width: 3em;
+     left: 1em;
   }
+  
   .back img{
-  height: 100%;
-  width: 100%;
+  	height: 100%;
+  	width: 100%;
   }
 
+div.message{
+	height: 3em;
+	display: flex;
+	font-size: 3em;
+	justify-content: center;
+	color: #FFFF00;
+}
 h1{
 	color: #FFFF00;
 	font-size: 2.5em;
