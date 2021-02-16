@@ -18,7 +18,9 @@
 <tr>
   <td>{{ checkin[0] }}</td>
   <td>{{ checkin[1] | formattime }}</td>
+  {% if checkin[2] is defined %}
   <td>{{ checkin[2] | formattime }}</td>
+  {% endif %}
 </tr>
 {% endfor %}
 </tbody>

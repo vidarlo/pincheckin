@@ -33,7 +33,7 @@ api = Flask(__name__)
 def ping():
     return render_template('message.html', message="pong")
 
-@api.route("/checkin")
+@api.route("/checkin", methods=['POST'])
 def checkin():
     try:
         conn=db.create_connection(config.DBFile())
@@ -41,7 +41,7 @@ def checkin():
         name = db.get_name(conn,request.form['tag'])
         return render_template('checkin.html', tag=request.form['tag'], name=name)
     except:
-        return render_template('checkin.html', fault=true)
+        return render_template('checkin.html', fault=True)
 
 @api.route("/checkout")
 def checkout():
