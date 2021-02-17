@@ -41,16 +41,24 @@ def insert_checkin(conn, tag):
     """
     userid = get_userid(conn,tag.upper())
     if userid > 0:
-        time_stamp = int(time.time())
-        sql = '''INSERT INTO checkins(user, checkin) VALUES(?,?)'''
-        try:
-            cur = conn.cursor()
-            cur.execute(sql, (userid, time_stamp))
-            conn.commit()
-            return cur.lastrowid
-        except:
-            raise
-            return None
+        sql = '''SELECT checkout FROM checkins WHERE user=? AND checkout is null'''
+        cur = conn.cursor()
+        cur.execute(sql, userid)
+        data=cursor.fetchall()
+        if len(data)==0:
+            time_stamp = int(time.time())
+            sql = '''INSERT INTO checkins(user, checkin) VALUES(?,?)'''
+            try:
+                cur = conn.cursor()
+                cur.execute(sql, (userid, time_stamp))
+                conn.commit()
+                return cur.lastrowid
+            except:
+                raise
+        else:
+            #Open checkins...
+            return -1
+                
 
 def insert_checkout(conn, tag):
     """
