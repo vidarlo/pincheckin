@@ -23,6 +23,7 @@ import datetime
 from flask import Flask
 from flask import request
 from flask import render_template
+from flask import Response
 
 listen_ip = config.listen_ip()
 listen_port = config.listen_port()
@@ -33,26 +34,15 @@ api = Flask(__name__)
 def ping():
     return render_template('message.html', message="pong")
 
-@api.route("/checkin", methods=['POST'])
+@api.route("/checkin")
 def checkin():
-    if request.form['action'] == "Checkin":
-        try:
-            conn=db.create_connection(config.DBFile())
-            id = db.insert_checkin(conn,tag=request.form['tag'])
-            conn.close()
-            return render_template('message.html', message="You're checked in, "+request.form['tag'])
-        except:
-            return render_template('message.html', message="Ooops")
-    elif request.form['action'] == "Checkout":
-        try:
-            conn=db.create_connection(config.DBFile())
-            id = db.insert_checkout(conn,tag=request.form['tag'])
-            name = db.get_name(conn,request.form['tag'])
-            conn.close()
-            return render_template('message.html', message="You're checked out, "+request.form['tag'])
-        except:
-            return render_template('message.html', message="Ooops, something didn't work")
-
+    try:
+        conn=db.create_connection(config.DBFile())
+        id = db.insert_checkin(conn,tag=request.form['tag'])
+        name = db.get_name(conn,request.form['tag'])
+        return render_template('checkin.html', tag=request.form['tag'], name=name)
+    except:
+        return render_template('checkin.html', fault=true)
 
 @api.route("/checkout")
 def checkout():
@@ -60,7 +50,6 @@ def checkout():
         conn=db.create_connection(config.DBFile())
         id = db.insert_checkout(conn,tag=request.form['tag'])
         name = db.get_name(conn,request.form['tag'])
-        conn.close()
         return render_template('checkin.html', tag=request.form['tag'], name=name)
     except:
         return render_template('checkin.html', fault=true)
@@ -92,7 +81,6 @@ def adduser():
                                        message="Welcome, " + request.form['tag'])
         else:
             return render_template('message.html', message="Missing some items...")
-        conn.close()
     except:
         return render_template('message.html',
                                message="Something wrong happened!<br />Already registered?")
@@ -100,10 +88,7 @@ def adduser():
 
 @api.template_filter('formattime')
 def formattime_filter(s,format="%H:%M %d. %b"):
-    if isinstance(s, int):
         return datetime.datetime.fromtimestamp(s).strftime(format)
-    else:
-        return "Not a date"
     
 @api.route("/list")
 def list():
@@ -113,24 +98,24 @@ def list():
     return render_template('list.html', visits = visits)
     
 
-#@api.route("/list/csv")
-#async def list(req, resp):
-#    data = await req.media()
-#    start = None
-#    count = None
-#    try:
-#        start = int(data['start'])
-#    except:
-#        start = 0
-#    try:
-#        count = int(data['count'])
-#    except:
-#        count = 25;
-#    resp.headers['Content-Type'] = 'text/csv'
-#    response = db.get_entries(conn,start = start, count=count)
-#    csv = 'Tag, Checkin, Checkout\n'
-#    for row in response:
-#        csv += row[0]+", "+str(time.ctime(row[1]))+", "+str(time.ctime(row[2]))+'\n'
-#    resp.text = csv
-    
-#api.run(address=listen_ip,port=listen_port)
+@api.route("/list/csv")
+def csv():
+    start = None
+    count = None
+    try:
+        start = int(request.form['start'])
+    except:
+        start = 0
+    try:
+        count = int(request.form['count'])
+    except:
+        count = 25;
+    conn=db.create_connection(config.DBFile())
+    response = db.get_entries(conn,start = start, count=count)
+    conn.close()
+    csv = 'Tag, Checkin, Checkout\n'
+    for row in response:
+        csv += row[0]+", "+str(time.ctime(row[1]))+", "+str(time.ctime(row[2]))+'\n'
+    response = Response(csv)
+    response.headers['Content-Type'] = 'text/csv'
+    return response
