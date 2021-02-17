@@ -3,24 +3,35 @@
 <head>
 <title>Besøk</title>
 <meta charset="utf-8"/>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap.min.bfk.css') }}">
 </head>
 <body>
-  <div class="back">
+  <div>
     <a href="{{ url_for('index') }}">
-    <img src="{{ url_for('static', filename='back.svg') }}" />
+    <img src="{{ url_for('static', filename='back.png') }}" class="spinny" >
     </a>
   </div>
-<table id="player" class="visits">
-<thead><th>Tag</th><th>From</th><th>To</th></thead>
-<tbody>
+<table id="player" class="list-group-item" >
+<thead class="table-dark"><th>Tag</th><th>From</th><th>To</th></thead>
+<tbody  style="border:solid; border-width: 2px">
 {% for checkin in visits %}
-<tr>
+<tr> 
+
+<style>
+table {
+  border-collapse: collapse;
+}
+tr { 
+  border: solid;
+  border-left: 1px solid #000;
+    border-right: 1px solid #000
+  border-width: 1px 0;
+}
+</style>
+
   <td>{{ checkin[0] }}</td>
   <td>{{ checkin[1] | formattime }}</td>
-  {% if checkin[2] is defined and checkin[2]|length %}
   <td>{{ checkin[2] | formattime }}</td>
-  {% endif %}
 </tr>
 {% endfor %}
 </tbody>

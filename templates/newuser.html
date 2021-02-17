@@ -3,33 +3,65 @@
 <head>
     <title>Registering new users in pincheckin</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.bfk.css') }}">
+ 
+
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+
 </head>
 <body>
 
 
- <div class="back">
+ <div>
     <a href="{{ url_for('index') }}">
-    <img src="{{ url_for('static', filename='back.svg') }}" />
+    <img src="{{ url_for('static', filename='back.png') }}" class="spinny" >
     </a>
   </div>
-
+<br>
  
+ <div style="margin:auto">
     <h1>Velkommen til Bergen Flipperspillklubb!</h1>
-
+    <h2>Du kan registrere deg i skjemaet under</h2>
+</div>
+<br>
+<br>
     <form id="form" action="{{ url_for('adduser') }}" title="" method="post">
-      <div id="tag" class="registerform">
+      <div id="tag" >
 	<p>
-        <input type="text" maxlength="3" style="text-transform:uppercase" class="form-control" name="tag" placeholder="TAG (tre bokstaver)">
-        <input type="text" style="text-transform:capitalize" class="form-control" name="name" placeholder="Navn">
-        <input type="text" style="text-transform:lowercase" class="form-control" name="email" placeholder="E-post">
-        <input type="text" class="form-control" name="phone" placeholder="Telefonnummer">
+        <input type="text" maxlength="3" style="text-transform:uppercase;
+                text-align: center;              
+                margin-left: 25%;
+                width: auto;" class="form-control" name="tag" placeholder="TAG (tre bokstaver)">
+    <br>
+        <input type="text" style="text-transform:capitalize;
+                text-align: center;
+                margin-left: 25%;
+                width: auto;" class="form-control" name="name" placeholder="Navn">
+    <br>   
+        <input type="text" contenteditable="true"  style="text-transform:lowercase;
+               
+             border: solid 1px black;
+             min-width: 50px; 
+             max-width: 300px;
+                text-align: center;
+                
+                margin-left: 25%;" class="form-control" name="email" placeholder="E-post">
+    <br>   
+        <input type="text" class="form-control" style="text-align: center;
+                margin-left: 25%;
+                width: auto;" name="phone" placeholder="Telefonnummer">
     </p>
-	<div>
-        <button type="submit" class="btn">Registrer</button>
-	</div>
-    </form>
 
+    <br>
+    <br>
+    <br>
+
+	<div>
+        <button type="submit" class="btn btn-success" style="margin-left: 25%;">Registrer</button>
+	</div>
+  
+    </form>
+<br>
 </div>
 </body>
 </html>
