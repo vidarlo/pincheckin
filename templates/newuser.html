@@ -11,45 +11,32 @@
 </head>
 <body>
 
+<br>
 
- <div>
+
+ <div >
     <a href="{{ url_for('index') }}">
     <img src="{{ url_for('static', filename='back.png') }}" class="spinny" >
     </a>
   </div>
-<br>
  
- <div style="margin:auto">
+ <div style="margin:0 auto;">
     <h1>Velkommen til Bergen Flipperspillklubb!</h1>
     <h2>Du kan registrere deg i skjemaet under</h2>
 </div>
+
 <br>
 <br>
     <form id="form" action="{{ url_for('adduser') }}" title="" method="post">
-      <div id="tag" >
+      <div id="tag" style="margin: 0 auto;">
 	<p>
-        <input type="text" maxlength="3" style="text-transform:uppercase;
-                text-align: center;              
-                margin-left: 25%;
-                width: auto;" class="form-control" name="tag" placeholder="TAG (tre bokstaver)">
+        <input type="text" maxlength="3"  class="form-pincheckin" name="tag" placeholder="TAG (tre bokstaver)">
     <br>
-        <input type="text" style="text-transform:capitalize;
-                text-align: center;
-                margin-left: 25%;
-                width: auto;" class="form-control" name="name" placeholder="Navn">
+        <input type="text" class="form-pincheckin" name="name" placeholder="Navn">
     <br>   
-        <input type="text" contenteditable="true"  style="text-transform:lowercase;
-               
-             border: solid 1px black;
-             min-width: 50px; 
-             max-width: 300px;
-                text-align: center;
-                
-                margin-left: 25%;" class="form-control" name="email" placeholder="E-post">
+        <input type="text" contenteditable="true"   class="form-pincheckin" name="email" placeholder="E-post">
     <br>   
-        <input type="text" class="form-control" style="text-align: center;
-                margin-left: 25%;
-                width: auto;" name="phone" placeholder="Telefonnummer">
+        <input type="text" class="form-pincheckin" name="phone" placeholder="Telefonnummer">
     </p>
 
     <br>

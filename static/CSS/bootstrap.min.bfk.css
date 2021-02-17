@@ -2539,10 +2539,11 @@ a.btn.disabled,fieldset:disabled a.btn {
 }
 
 .spinny {
-  max-width: 10%;
-  max-height: 10%;
-  margin-top: 5%;
-  margin-left: 5%;
+  max-width: 50px;
+  max-height: 50px;
+  transform: rotate(25deg);
+  margin-top: 25px;
+  margin-left: 25px;
 }
 
 .spinny:hover {
@@ -2551,6 +2552,15 @@ a.btn.disabled,fieldset:disabled a.btn {
     transform: rotate(360deg);
     transform-origin: center center;
     transition: all 0.3s ease-in-out 0s;
+}
+
+.form-pincheckin{
+	border: solid 1px black;
+	border-radius: 10px;
+    min-width: 50px; 
+    max-width: 300px;
+    text-align: center;
+    margin-left: 25%;
 }
 
 .btn-success.focus,.btn-success:focus {
