@@ -33,15 +33,26 @@ api = Flask(__name__)
 def ping():
     return render_template('message.html', message="pong")
 
-@api.route("/checkin")
+@api.route("/checkin", methods=['POST'])
 def checkin():
-    try:
-        conn=db.create_connection(config.DBFile())
-        id = db.insert_checkin(conn,tag=request.form['tag'])
-        name = db.get_name(conn,request.form['tag'])
-        return render_template('checkin.html', tag=request.form['tag'], name=name)
-    except:
-        return render_template('checkin.html', fault=true)
+    if request.form['action'] == "Checkin":
+        try:
+            conn=db.create_connection(config.DBFile())
+            id = db.insert_checkin(conn,tag=request.form['tag'])
+            conn.close()
+            return render_template('message.html', message="You're checked in, "+request.form['tag'])
+        except:
+            return render_template('message.html', message="Ooops")
+    elif request.form['action'] == "Checkout":
+        try:
+            conn=db.create_connection(config.DBFile())
+            id = db.insert_checkout(conn,tag=request.form['tag'])
+            name = db.get_name(conn,request.form['tag'])
+            conn.close()
+            return render_template('message.html', message="You're checked out, "+request.form['tag'])
+        except:
+            return render_template('message.html', message="Ooops, something didn't work")
+
 
 @api.route("/checkout")
 def checkout():
@@ -49,6 +60,7 @@ def checkout():
         conn=db.create_connection(config.DBFile())
         id = db.insert_checkout(conn,tag=request.form['tag'])
         name = db.get_name(conn,request.form['tag'])
+        conn.close()
         return render_template('checkin.html', tag=request.form['tag'], name=name)
     except:
         return render_template('checkin.html', fault=true)
@@ -80,6 +92,7 @@ def adduser():
                                        message="Welcome, " + request.form['tag'])
         else:
             return render_template('message.html', message="Missing some items...")
+        conn.close()
     except:
         return render_template('message.html',
                                message="Something wrong happened!<br />Already registered?")
@@ -87,12 +100,16 @@ def adduser():
 
 @api.template_filter('formattime')
 def formattime_filter(s,format="%H:%M %d. %b"):
+    if isinstance(s, int):
         return datetime.datetime.fromtimestamp(s).strftime(format)
+    else:
+        return "Not a date"
     
 @api.route("/list")
 def list():
     conn=db.create_connection(config.DBFile())
     visits = db.get_entries(conn,start = 0, count=10)
+    conn.close()
     return render_template('list.html', visits = visits)
     
 
