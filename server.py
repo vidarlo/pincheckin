@@ -36,30 +36,42 @@ def ping():
 
 @api.route("/checkin", methods=['POST'])
 def checkin():
-    data = request.form.get
-    print(data)
-    if request.form.get("checkin"):
-        print("Trying to check in!")
+    if request.form.get('Checkin'):
         try:
             conn=db.create_connection(config.DBFile())
             id = db.insert_checkin(conn,tag=request.form['tag'])
-            name = db.get_name(conn,request.form['tag'])
-            return render_template('message.html', tag=request.form['tag'], name=name)
+            if id > 0:
+                return render_template('message.html',
+                                       message=request.form['tag'])
+            else:
+                return render_template('message.html',
+                                       message='Are you already checked in?',
+                                       fault=True)
         except:
-            return render_template('message.html', fault=true, message="Are you already logged in?")
+            return render_template('message.html',
+                                   fault=True,
+                                   message='Are you already logged in?')
 
-
-    elif request.form.get("checkout"):
-        print("Trying to check out!")
+    elif request.form.get('Checkout'):
         try:
             conn=db.create_connection(config.DBFile())
             id = db.insert_checkout(conn,tag=request.form['tag'])
             name = db.get_name(conn,request.form['tag'])
-            return render_template('message.html', tag=request.form['tag'], name=name)
+            if id > 0:
+                return render_template('message.html',
+                                       message=request.form['tag'])
+            else:
+                return render_template('message.html',
+                                       message='Are you already checked out?',
+                                       fault=True)
         except:
-            return render_template('message.html', fault=true, message="Are you already logged out?")
-#    else
-#         return render_template('message.html', fault=true, message="something went wonky")
+            return render_template('message.html',
+                                   fault=True,
+                                   message="Are you already logged out?")
+    else:
+        return render_template('message.html',
+                               fault=True,
+                               message="Invalid parameter?")
 
 
 
