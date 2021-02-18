@@ -79,11 +79,13 @@ def insert_checkout(conn, tag):
             cur.execute(lr_sql, (userid,))
             checkin_id = cur.fetchone()[0]
             cur.execute(up_sql, (time_stamp, checkin_id))
+            last_id = checkin_id
             conn.commit()
-            return cur.lastrowid
+            return last_id
         except:
             raise
             return None
+    
 
 def new_user(conn, tag, email,phone, name):
     """

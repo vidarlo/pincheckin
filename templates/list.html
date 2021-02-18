@@ -3,17 +3,30 @@
 <head>
 <title>Besøk</title>
 <meta charset="utf-8"/>
-<link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap.min.bfk.css') }}">
+<link rel="stylesheet"  type="text/css" href="{{ url_for('static', filename='/css/bootstrap.min.bfk.css') }}">
 </head>
 <body>
+
   <div>
     <a href="{{ url_for('index') }}">
     <img src="{{ url_for('static', filename='back.png') }}" class="spinny" >
     </a>
   </div>
-<table id="player" class="list-group-item" >
-<thead class="table-dark"><th>Tag</th><th>From</th><th>To</th></thead>
-<tbody  style="border:solid; border-width: 2px">
+
+
+
+
+<table id="player" class="table table-striped" style="border-color: rgba(92,184,92,.75);width: 50%; margin-left: auto; margin-right: auto;" >
+
+<thead class="table" style="  	border:solid; 
+								border-color: rgba(92,184,92,.75);
+								background-color: rgba(92,184,92,.75);
+								border-top-right-radius: 20px;
+								border-top-left-radius: 20px"><th>Dato</th> <th>Tag</th><th>From</th><th>To</th></thead>
+<tbody  class="table table-dark-striped" style="	border:solid;
+												 	border-color: rgba(92,184,92,.75);
+												 	border-bottom-left-radius: 30px;
+												 	border-bottom-right-radius: 30px;">
 {% for checkin in visits %}
 <tr> 
 
@@ -22,13 +35,12 @@ table {
   border-collapse: collapse;
 }
 tr { 
-  border: solid;
-  border-left: 1px solid #000;
-    border-right: 1px solid #000
-  border-width: 1px 0;
+  
+ 
 }
 </style>
 
+<td>{{ checkin[1] | formattime_onlydate }}</td>
   <td>{{ checkin[0] }}</td>
 <td>{{ checkin[1] | formattime }}</td>
 {% if checkin[2] is defined %}
@@ -38,6 +50,7 @@ tr {
 {% endfor %}
 </tbody>
 
-</table>        
+</table>  
+     
 </body>
 </html>

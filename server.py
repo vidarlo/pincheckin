@@ -42,7 +42,7 @@ def checkin():
             id = db.insert_checkin(conn,tag=request.form['tag'])
             if id > 0:
                 return render_template('message.html',
-                                       message=request.form['tag'])
+                                       message="Velkommen hjem, " + request.form['tag'])
             else:
                 return render_template('message.html',
                                        message='Are you already checked in?',
@@ -59,7 +59,7 @@ def checkin():
             name = db.get_name(conn,request.form['tag'])
             if id > 0:
                 return render_template('message.html',
-                                       message=request.form['tag'])
+                                       message="Takk for besøket, " + request.form['tag'])
             else:
                 return render_template('message.html',
                                        message='Are you already checked out?',
@@ -108,11 +108,19 @@ def adduser():
 
 
 @api.template_filter('formattime')
-def formattime_filter(s,format="%H:%M %d. %b"):
+def formattime_filter(s,format="%H:%M"):
     if isinstance(s, int):
         return datetime.datetime.fromtimestamp(s).strftime(format)
     else:
         return "Still here!"
+
+@api.template_filter('formattime_onlydate')
+def formattime_onlydate_filter(s,format="%d. %b"):
+    if isinstance(s, int):
+        return datetime.datetime.fromtimestamp(s).strftime(format)
+    else:
+        return "Still here!"
+
     
 @api.route("/list")
 def list():

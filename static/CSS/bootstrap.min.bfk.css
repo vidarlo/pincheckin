@@ -58,7 +58,7 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff;
+ background: linear-gradient(5deg, rgba(245,161,255,1) 55%, rgba(123,233,255,1) 100%);
 }
 
 [tabindex="-1"]:focus {
@@ -1671,8 +1671,8 @@ pre code {
   border: 0;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(0,0,0,.05);
+.table-striped tbody tr:nth-of-type(even) {
+  background-color: rgba(92,184,92,.35);
 }
 
 .table-hover tbody tr:hover {
@@ -1846,7 +1846,7 @@ pre code {
 }
 
 .table-dark.table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(255,255,255,.05);
+  background-color: rgba(255,255,150,.15);
 }
 
 .table-dark.table-hover tbody tr:hover {
@@ -1931,6 +1931,15 @@ pre code {
   border: 1px solid #ced4da;
   border-radius: .25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-pincheckin{
+	border: solid 1px black;
+	border-radius: 5px;
+    min-width: 50px; 
+    max-width: 300px;
+    text-align: center;
+    margin-left: 25%;
 }
 
 @media (prefers-reduced-motion:reduce) {
@@ -2554,14 +2563,7 @@ a.btn.disabled,fieldset:disabled a.btn {
     transition: all 0.3s ease-in-out 0s;
 }
 
-.form-pincheckin{
-	border: solid 1px black;
-	border-radius: 10px;
-    min-width: 50px; 
-    max-width: 300px;
-    text-align: center;
-    margin-left: 25%;
-}
+
 
 .btn-success.focus,.btn-success:focus {
   box-shadow: 0 0 0 .2rem rgba(72,180,97,.5);
@@ -10191,5 +10193,11 @@ a.text-dark:focus,a.text-dark:hover {
     transform: rotate(-45deg);
     transition: all 0.2s ease-in-out 0s;
 }
+
+.table-pincheckin tbody tr:nth-of-type(odd) {
+  background-color: lightseagreen;
 }
-/*# sourceMappingURL=bootstrap.min.bfk.css.map */
+
+
+
+}

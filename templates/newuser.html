@@ -3,7 +3,7 @@
 <head>
     <title>Registering new users in pincheckin</title>
 
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.bfk.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/bootstrap.min.bfk.css') }}">
  
 
 <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
@@ -27,16 +27,16 @@
 
 <br>
 <br>
-    <form id="form" action="{{ url_for('adduser') }}" title="" method="post">
-      <div id="tag" style="margin: 0 auto;">
+    <form id="form" action="{{ url_for('adduser') }}" title="" method="post" >
+      <div id="tag" >
 	<p>
-        <input type="text" maxlength="3"  class="form-pincheckin" name="tag" placeholder="TAG (tre bokstaver)">
+        <input type="text" maxlength="3"  class="media form-pincheckin" name="tag" placeholder="TAG (tre bokstaver)">
     <br>
-        <input type="text" class="form-pincheckin" name="name" placeholder="Navn">
+        <input type="text" class="media form-pincheckin" name="name" placeholder="Navn">
     <br>   
-        <input type="text" contenteditable="true"   class="form-pincheckin" name="email" placeholder="E-post">
+        <input type="text" contenteditable="true"   class="media form-pincheckin" name="email" placeholder="E-post">
     <br>   
-        <input type="text" class="form-pincheckin" name="phone" placeholder="Telefonnummer">
+        <input type="text" class=" media form-pincheckin" name="phone" placeholder="Telefonnummer">
     </p>
 
     <br>
