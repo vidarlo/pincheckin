@@ -52,22 +52,19 @@ def checkin():
             conn=db.create_connection(config.DBFile())
             id = db.insert_checkin(conn,tag=request.form['tag'])
             if id > 0:
-                print("ready to make javascript, if")
-                js = render_js('static/scripts.js', a=10000)
+                js = render_js('static/scripts.js', a=3000)
                 return render_template('message.html',
-                                       message="Velkommen hjem, " + request.form['tag'], js = js)
+                                       message="Velkommen hjem, " + request.form['tag'], returnscript = js)
             else:
-                print("ready to make javascript, else")
                 js = render_js('static/scripts.js', a=30000)
                 return render_template('message.html',
-                                       message='Are you already checked in?', js = js,
+                                       message='Are you already checked in?', returnscript = js,
                                        fault=True)
         except:
-            print("ready to make javascript, except")
             js = render_js('static/scripts.js', a=30000)
             return render_template('message.html',
                                    fault=True,
-                                   message='Are you already logged in?', js = js)
+                                   message='Are you already logged in?', returnscript = js)
 
     elif request.form.get('Checkout'):
         try:
@@ -75,20 +72,23 @@ def checkin():
             id = db.insert_checkout(conn,tag=request.form['tag'])
             name = db.get_name(conn,request.form['tag'])
             if id > 0:
-                return render_template('message.html',
-                                       message="Takk for besøket, " + request.form['tag'])
+                js = render_js('static/scripts.js', a=3000)
+                return render_template('message.html', message="Takk for besøket, " + request.form['tag'], returnscript = js)
             else:
+                js = render_js('static/scripts.js', a=30000)
                 return render_template('message.html',
                                        message='Are you already checked out?',
-                                       fault=True)
+                                       fault=True, returnscript = js)
         except:
+            js = render_js('static/scripts.js', a=30000)
             return render_template('message.html',
                                    fault=True,
-                                   message="Are you already logged out?")
+                                   message="Are you already logged out?", returnscript = js)
     else:
+        js = render_js('static/scripts.js', a=30000)
         return render_template('message.html',
                                fault=True,
-                               message="Invalid parameter?")
+                               message="Invalid parameter?", returnscript = js)
 
 
 
