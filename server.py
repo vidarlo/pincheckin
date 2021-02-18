@@ -23,6 +23,7 @@ import datetime
 from flask import Flask
 from flask import request
 from flask import render_template
+from flask import render_template_string
 from flask import Response
 
 listen_ip = config.listen_ip()
@@ -30,27 +31,43 @@ listen_port = config.listen_port()
 
 api = Flask(__name__)
 
+def render_js(fname, **kwargs):
+    with open(fname) as fin:
+        script = fin.read()
+        rendered_script = render_template_string(script, **kwargs)
+        return rendered_script
+
 @api.route("/ping")
 def ping():
     return render_template('message.html', message="pong")
 
 @api.route("/checkin", methods=['POST'])
+
+
+
+
 def checkin():
     if request.form.get('Checkin'):
         try:
             conn=db.create_connection(config.DBFile())
             id = db.insert_checkin(conn,tag=request.form['tag'])
             if id > 0:
+                print("ready to make javascript, if")
+                js = render_js('static/scripts.js', a=10000)
                 return render_template('message.html',
-                                       message="Velkommen hjem, " + request.form['tag'])
+                                       message="Velkommen hjem, " + request.form['tag'], js = js)
             else:
+                print("ready to make javascript, else")
+                js = render_js('static/scripts.js', a=30000)
                 return render_template('message.html',
-                                       message='Are you already checked in?',
+                                       message='Are you already checked in?', js = js,
                                        fault=True)
         except:
+            print("ready to make javascript, except")
+            js = render_js('static/scripts.js', a=30000)
             return render_template('message.html',
                                    fault=True,
-                                   message='Are you already logged in?')
+                                   message='Are you already logged in?', js = js)
 
     elif request.form.get('Checkout'):
         try:
