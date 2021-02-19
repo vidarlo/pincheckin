@@ -177,4 +177,30 @@ def csv():
     return response
 
 if __name__ == '__main__':
-    api.run(debug=False, host='0.0.0.0')
+    if not os.path.isfile(config.DBFile()):
+        print("Creating database...")
+        conn = db.create_connection(config.DBFile())
+        sql_users = '''CREATE TABLE "users" (
+        "id"    INTEGER NOT NULL UNIQUE,
+        "email" TEXT,
+        "tag"   TEXT NOT NULL UNIQUE,
+        "phone" TEXT,
+        "name" TEXT,
+        PRIMARY KEY("id" AUTOINCREMENT)
+);
+        '''
+        sql_checkins = '''CREATE TABLE "checkins" (
+        "id"    INTEGER NOT NULL UNIQUE,
+        "user"  INTEGER,
+        "checkin"       INTEGER,
+        "checkout"      INTEGER,
+        FOREIGN KEY("user") REFERENCES "users"("id"),
+        PRIMARY KEY("id" AUTOINCREMENT)
+);
+        '''
+        cur = conn.cursor()
+        cur.execute(sql_users)
+        cur.execute(sql_checkins)
+        conn.commit()
+        conn.close()
+    api.run(debug=False, host='0.0.0.0')        
