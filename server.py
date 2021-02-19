@@ -25,9 +25,8 @@ from flask import request
 from flask import render_template
 from flask import render_template_string
 from flask import Response
+from waitress import serve
 
-listen_ip = config.listen_ip()
-listen_port = config.listen_port()
 
 api = Flask(__name__)
 
@@ -203,4 +202,4 @@ if __name__ == '__main__':
         cur.execute(sql_checkins)
         conn.commit()
         conn.close()
-    api.run(debug=False, host='0.0.0.0')        
+    serve(api, port=config.listen_port(), host=config.listen_ip())
