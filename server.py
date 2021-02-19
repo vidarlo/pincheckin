@@ -175,3 +175,6 @@ def csv():
     response = Response(csv)
     response.headers['Content-Type'] = 'text/csv'
     return response
+
+if __name__ == '__main__':
+    api.run(debug=False, host='0.0.0.0')
