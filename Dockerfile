@@ -2,7 +2,7 @@ FROM alpine
 
 LABEL pincheckin Vidar Løkken <vl@bitsex.net>
 
-RUN apk --update add python3 py3-pip
+RUN apk --update add python3 py3-pip tzdata
 RUN apk add --virtual .build-deps python3 py3-pip gcc g++ make python3-dev
 
 COPY . /app

@@ -9,7 +9,9 @@
 <script type="text/javascript">
   {{returnscript|safe}}
 </script>
-
+ <div class="menu">
+    {% include 'menu.html' %}
+  </div>
   <div >
     <a href="{{ url_for('index') }}">
     <img src="{{ url_for('static', filename='back.png') }}" class="spinny" >
