@@ -140,14 +140,19 @@ def get_name(conn,tag):
     except:
         return -1
     
-def get_entries(conn,start = 0,count = 25):
+def get_entries(conn,start = 0,count = 25, checkedin = False):
     """
     Get entries
     :param conn: SQL Connection
     :param start: Start point (default:0)
     :param count: number to get (default: 25)
+    :param checkedin: Only return checked in users if true
     """
-    sql = '''SELECT users.tag,checkins.checkin,checkins.checkout FROM checkins INNER JOIN users on users.id = checkins.user ORDER BY checkins.id DESC LIMIT ?,?'''
+    sql = None
+    if not checkedin:
+        sql = '''SELECT users.tag,checkins.checkin,checkins.checkout FROM checkins INNER JOIN users on users.id = checkins.user ORDER BY checkins.id DESC LIMIT ?,?'''
+    elif checkedin:
+        sql = '''SELECT users.tag,checkins.checkin FROM checkins INNER JOIN users on users.id = checkins.user WHERE checkins.checkout is null ORDER BY checkins.id DESC LIMIT ?,?'''  
     try:
         cur = conn.cursor()
         cur.execute(sql, (start,count))

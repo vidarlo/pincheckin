@@ -25,7 +25,9 @@
 								border-color: rgba(92,184,92,.75);
 								background-color: rgba(92,184,92,.75);
 								border-top-right-radius: 20px;
-								border-top-left-radius: 20px"><th>Dato</th> <th>Tag</th><th>From</th><th>To</th></thead>
+       border-top-left-radius: 20px">
+
+ <th>Dato</th> <th>Tag</th><th>From</th><th>To</th></thead>
 <tbody  class="table table-dark-striped" style="	border:solid;
 												 	border-color: rgba(92,184,92,.75);
 												 	border-bottom-left-radius: 30px;
@@ -46,8 +48,16 @@ tr {
 <td>{{ checkin[1] | formattime_onlydate }}</td>
   <td>{{ checkin[0] }}</td>
 <td>{{ checkin[1] | formattime }}</td>
+{% if checkedin is defined %}
+<td><form action="{{ url_for('checkin') }}" method="POST">
+    <input name="tag" type="hidden" value="{{ checkin[0] }}" />
+    <input type="submit" value="Check out" name="Checkout" />
+   </form>
+</td>
+{% else %}
 {% if checkin[2] is defined %}
 <td>{{ checkin[2] | formattime  }}</td>
+{% endif %}
 {% endif %}
 </tr>
 {% endfor %}

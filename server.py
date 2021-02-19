@@ -141,15 +141,17 @@ def formattime_onlydate_filter(s,format="%d. %b"):
     
 @api.route("/list")
 def list():
-    print("trying to make list")
     conn=db.create_connection(config.DBFile())
-    print("connection made")
     visits = db.get_entries(conn,start = 0, count=10)
-    print("found the last 10 entries")
     conn.close()
-    print("closed connection")
     return render_template('list.html', visits = visits)
-    print("made viewing")
+
+@api.route("/list/checkout")
+def list_checkedin():
+    conn=db.create_connection(config.DBFile())
+    visits = db.get_entries(conn,start = 0, count=200, checkedin=True)
+    conn.close()
+    return render_template('list.html', visits = visits, checkedin=True)
     
 
 @api.route("/list/csv")
