@@ -43,6 +43,7 @@ html {
   font-family: sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
+  min-height: 100%;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -56,6 +57,7 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
+  min-height: 100%;
   color: #212529;
   text-align: left;
  background: linear-gradient(5deg, rgba(245,161,255,1) 55%, rgba(123,233,255,1) 100%);
@@ -10198,6 +10200,10 @@ a.text-dark:focus,a.text-dark:hover {
   background-color: lightseagreen;
 }
 
+.message 
+{
+  margin: 0 auto;
+}
 
 
 }
