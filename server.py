@@ -30,8 +30,9 @@ import gettext
 from flask_babel import Babel
 
 localedir = './translations/'
-translate = gettext.translation('pincheckin', localedir, fallback=True,languages=['en','no'])
+translate = gettext.translation('messages', localedir, fallback=True,languages=['nb'])
 _ = translate.gettext
+translate.install()
 
 api = Flask(__name__)
 babel = Babel(api, default_locale='nb_NO')

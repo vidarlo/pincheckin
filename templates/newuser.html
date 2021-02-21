@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
 <head>
-    <title>Registering new users in pincheckin</title>
+    <title>{{ _("Registering new users in pincheckin") }}</title>
 
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/bootstrap.min.bfk.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.bfk.css') }}">
  
 
 <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
@@ -21,8 +21,8 @@
   </div>
  
  <div style="margin:0 auto;">
-    <h1>Velkommen til Bergen Flipperspillklubb!</h1>
-    <h2>Du kan registrere deg i skjemaet under</h2>
+    <h1>{{ _("Welcome") }}</h1>
+    <h2>{{ _("Register a user below") }}</h2>
 </div>
 
 <br>
@@ -30,25 +30,20 @@
     <form id="form" action="{{ url_for('adduser') }}" title="" method="post" >
       <div id="tag" >
 	<p>
-        <input type="text" maxlength="3"  class="media form-pincheckin" name="tag" placeholder="TAG (tre bokstaver)">
+        <input type="text" maxlength="3"  class="media form-pincheckin" name="tag" placeholder="{{ _("Player tag") }}">
     <br>
-        <input type="text" class="media form-pincheckin" name="name" placeholder="Navn">
+        <input type="text" class="media form-pincheckin" name="name" placeholder="{{ _("Name") }}">
     <br>   
-        <input type="text" contenteditable="true"   class="media form-pincheckin" name="email" placeholder="E-post">
+        <input type="text" contenteditable="true"   class="media form-pincheckin" name="email" placeholder="{{ _("E-Mail") }}">
     <br>   
-        <input type="text" class=" media form-pincheckin" name="phone" placeholder="Telefonnummer">
+        <input type="text" class=" media form-pincheckin" name="phone" placeholder="{{ _("Phone number") }}">
     </p>
 
-    <br>
-    <br>
-    <br>
-
 	<div>
-        <button type="submit" class="btn btn-success" style="margin-left: 25%;">Registrer</button>
+        <button type="submit" class="btn btn-success" style="margin-left: 25%;">{{ _("Create") }}</button>
 	</div>
   
     </form>
-<br>
 </div>
 </body>
 </html>
