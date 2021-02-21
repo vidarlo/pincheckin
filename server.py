@@ -26,10 +26,15 @@ from flask import render_template
 from flask import render_template_string
 from flask import Response
 from waitress import serve
+import gettext
 
+localedir = './locale'
+translate = gettext.translation('pincheckin', localedir, fallback=True)
+_ = translate.gettext
 
 api = Flask(__name__)
-
+api.jinja_options['extensions'].append('jinja2.ext.i18n')
+                  
 def render_js(fname, **kwargs):
     with open(fname) as fin:
         script = fin.read()
@@ -38,7 +43,7 @@ def render_js(fname, **kwargs):
 
 @api.route("/ping")
 def ping():
-    return render_template('message.html', message="pong")
+    return render_template('message.html', message=_("pong"))
 
 @api.route("/checkin", methods=['POST'])
 
@@ -53,17 +58,17 @@ def checkin():
             if id > 0:
                 js = render_js('static/scripts.js', a=3000)
                 return render_template('message.html',
-                                       message="Velkommen hjem, " + request.form['tag'], returnscript = js)
+                                       message=_('Welcome back, ') + request.form['tag'], returnscript = js)
             else:
                 js = render_js('static/scripts.js', a=30000)
                 return render_template('message.html',
-                                       message='Are you already checked in?', returnscript = js,
+                                       message=_('Are you already checked in?'), returnscript = js,
                                        fault=True)
         except:
             js = render_js('static/scripts.js', a=30000)
             return render_template('message.html',
                                    fault=True,
-                                   message='Are you already logged in?', returnscript = js)
+                                   message=_('Something went wrong. Are you registered?'), returnscript = js)
 
     elif request.form.get('Checkout'):
         try:
@@ -72,22 +77,22 @@ def checkin():
             name = db.get_name(conn,request.form['tag'])
             if id > 0:
                 js = render_js('static/scripts.js', a=3000)
-                return render_template('message.html', message="Takk for besøket, " + request.form['tag'], returnscript = js)
+                return render_template('message.html', message=_('See you soon, ') + request.form['tag'], returnscript = js)
             else:
                 js = render_js('static/scripts.js', a=30000)
                 return render_template('message.html',
-                                       message='Are you already checked out?',
+                                       message=_('Are you already checked out?'),
                                        fault=True, returnscript = js)
         except:
             js = render_js('static/scripts.js', a=30000)
             return render_template('message.html',
                                    fault=True,
-                                   message="Are you already logged out?", returnscript = js)
+                                   message=_('Something went wrong!'), returnscript = js)
     else:
         js = render_js('static/scripts.js', a=30000)
         return render_template('message.html',
                                fault=True,
-                               message="Invalid parameter?", returnscript = js)
+                               message=_('Invalid parameter?'), returnscript = js)
 
 
 
@@ -110,17 +115,17 @@ def adduser():
                                  request.form['phone'],
                                  request.form['name'])
             if retval == -1:
-                return render_template('message.html', message="Are you sure you're not already registered?")
+                return render_template('message.html', message=_('Are you sure you\'re not already registered?'))
             elif retval == -2:
-                return render_template('message.html', message="Something went wrong, try again later")
+                return render_template('message.html', message=_('Something went wrong, try again later'))
             else:
                 return render_template('message.html',
-                                       message="Welcome, " + request.form['tag'])
+                                       message=_('Welcome, ') + request.form['tag'])
         else:
-            return render_template('message.html', message="Missing some items...")
+            return render_template('message.html', message=_('Missing some items...'))
     except:
         return render_template('message.html',
-                               message="Something wrong happened!<br />Already registered?")
+                               message=_('Something wrong happened!<br />Already registered?'))
 
 
 @api.template_filter('formattime')
@@ -128,14 +133,14 @@ def formattime_filter(s,format="%H:%M"):
     if isinstance(s, int):
         return datetime.datetime.fromtimestamp(s).strftime(format)
     else:
-        return "Still here!"
+        return _('Still here!')
 
 @api.template_filter('formattime_onlydate')
 def formattime_onlydate_filter(s,format="%d. %b"):
     if isinstance(s, int):
         return datetime.datetime.fromtimestamp(s).strftime(format)
     else:
-        return "Still here!"
+        return _('Still here!')
 
     
 @api.route("/list")
@@ -177,7 +182,6 @@ def csv():
 
 if __name__ == '__main__':
     if not os.path.isfile(config.DBFile()):
-        print("Creating database...")
         conn = db.create_connection(config.DBFile())
         sql_users = '''CREATE TABLE "users" (
         "id"    INTEGER NOT NULL UNIQUE,
