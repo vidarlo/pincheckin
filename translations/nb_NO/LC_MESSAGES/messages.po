@@ -33,75 +33,75 @@ msgstr "Er du alt sjekket inn?"
 
 #: server.py:74
 msgid "Something went wrong. Are you registered?"
-msgstr ""
+msgstr "Noe gikk galt. Er du registrert?"
 
 #: server.py:83
 msgid "See you soon, "
-msgstr ""
+msgstr "På gjensyn,"
 
 #: server.py:87
 msgid "Are you already checked out?"
-msgstr ""
+msgstr "Er du allerede logget ut?"
 
 #: server.py:93
 msgid "Something went wrong!"
-msgstr ""
+msgstr "Noe gikk galt!"
 
 #: server.py:98
 msgid "Invalid parameter?"
-msgstr ""
+msgstr "Ugyldig parameter?"
 
 #: server.py:121
 msgid "Are you sure you're not already registered?"
-msgstr ""
+msgstr "Er du sikker på at du ikke allerede er registrert?"
 
 #: server.py:123
 msgid "Something went wrong, try again later"
-msgstr ""
+msgstr ""Noe gikk galt. Prøv igjen senere
 
 #: server.py:126
 msgid "Welcome, "
-msgstr ""
+msgstr "Velkommen, "
 
 #: server.py:128
 msgid "Missing some items..."
-msgstr ""
+msgstr "Mangler noen punkter..."
 
 #: server.py:131
 msgid "Something wrong happened!<br />Already registered?"
-msgstr ""
+msgstr "Noe gikk galt! <br />Allerede registrert?"
 
 #: server.py:139 server.py:146
 msgid "Still here!"
-msgstr ""
+msgstr "Fortsatt her!"
 
 #: templates/index.html:4
 msgid "Logging in users in pincheckin"
-msgstr ""
+msgstr "Innlogging av brukere i pincheckin"
 
 #: templates/index.html:19
 msgid "Welcome!"
-msgstr ""
+msgstr "Velkommen!"
 
 #: templates/index.html:47
 msgid "Player tag"
-msgstr ""
+msgstr "Spiller-tag"
 
 #: templates/index.html:57
 msgid "Check in"
-msgstr ""
+msgstr "Sjekk inn!"
 
 #: templates/index.html:60
 msgid "Check out!"
-msgstr ""
+msgstr "Sjekk ut!"
 
 #: templates/index.html:67
 msgid "New user!"
-msgstr ""
+msgstr "Ny bruker"
 
 #: templates/list.html:4
 msgid "Visitors"
-msgstr ""
+msgstr "Gjester"
 
 #: templates/list.html:36
 msgid "Date"
@@ -121,15 +121,15 @@ msgstr "Til"
 
 #: templates/menu.html:2
 msgid "Home"
-msgstr ""
+msgstr "Hjem"
 
 #: templates/menu.html:3
 msgid "Entries"
-msgstr ""
+msgstr "Innlogginger"
 
 #: templates/menu.html:4
 msgid "Checked in"
-msgstr ""
+msgstr "Sjekket inn"
 
 #: templates/message.html:3
 msgid "Pincheckin"
