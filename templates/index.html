@@ -8,24 +8,20 @@
 
 </head>
 <body>
- 
-
  <div class="menu">
     {% include 'menu.html' %}
-  </div>
+ </div>
 
-<br>
-
-<div class="col text-center">
+  <div class="col text-center">
   <br>
   <br>
 
-  <br>
     <h1>{% trans %}Welcome!{% endtrans %}</h1>
   
+  <br>
 
-<img src="/static/FlipperspillLOGO.png" style="
-  max-width: 20%;
+<img src="{{ url_for('static', filename='logo.png') }}" style="
+  max-width: 18%;
   height: auto;
 ">
   <br>

@@ -58,7 +58,7 @@ tr {
 {% if checkedin is defined %}
 <td><form action="{{ url_for('checkin') }}" method="POST">
     <input name="tag" type="hidden" value="{{ checkin[0] }}" />
-    <input type="submit" class="btn btn-danger" value="Check out {{ checkin[0] }}" name="Checkout" />
+    <input type="submit" class="btn btn-danger" value="{{ _("Check out ") }} {{ checkin[0] }}" name="Checkout" />
    </form>
 </td>
 {% else %}

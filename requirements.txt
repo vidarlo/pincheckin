@@ -1,5 +1,4 @@
 flask
 configparser
 waitress
-gettext
 Flask-Babel
