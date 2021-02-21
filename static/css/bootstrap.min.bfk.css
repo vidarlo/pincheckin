@@ -57,10 +57,11 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
+  color: red;
   min-height: 100%;
-  color: #212529;
+  color: #f7f2f3;
   text-align: left;
- background: linear-gradient(5deg, rgba(245,161,255,1) 55%, rgba(123,233,255,1) 100%);
+ background: #1f1e1e;
 }
 
 [tabindex="-1"]:focus {
@@ -101,8 +102,18 @@ address {
 }
 
 dl,ol,ul {
-  margin-top: 0;
+  margin-top:0;
   margin-bottom: 1rem;
+  align-items: right;
+}
+li {
+  margin-right: 15%;
+}
+
+#menu {
+  position: fixed;
+  right: 2%;
+  top: 2%;
 }
 
 ol ol,ol ul,ul ol,ul ul {
@@ -1850,6 +1861,10 @@ pre code {
 .table-dark.table-striped tbody tr:nth-of-type(odd) {
   background-color: rgba(255,255,150,.15);
 }
+.table.dark.table-striped tbody tr:nth-of-type(even){
+  background-color: #f75f54;
+}
+
 
 .table-dark.table-hover tbody tr:hover {
   color: #fff;
@@ -10199,11 +10214,17 @@ a.text-dark:focus,a.text-dark:hover {
 .table-pincheckin tbody tr:nth-of-type(odd) {
   background-color: lightseagreen;
 }
+.table-pincheckin tbody tr:nth-of-type(even){
+  background-color: #f75f54;
+}
 
 .message 
 {
   margin: 0 auto;
 }
-
+.menu
+{
+  margin-right: 5%;
+}
 
 }

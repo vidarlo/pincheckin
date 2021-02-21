@@ -125,11 +125,11 @@ msgstr "Hjem"
 
 #: templates/menu.html:3
 msgid "Entries"
-msgstr "Innlogginger"
+msgstr "Siste innlogginger"
 
 #: templates/menu.html:4
 msgid "Checked in"
-msgstr "Sjekket inn"
+msgstr "Sjekket inn nå"
 
 #: templates/message.html:3
 msgid "Pincheckin"
