@@ -1,0 +1,136 @@
+# Norwegian Bokmål (Norway) translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-02-21 11:40+0100\n"
+"PO-Revision-Date: 2021-02-21 12:15+0100\n"
+"Language: nb_NO\n"
+"Language-Team: nb_NO <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+"Last-Translator: \n"
+"X-Generator: Poedit 2.2.1\n"
+
+#: server.py:49
+msgid "pong"
+msgstr "pang"
+
+#: server.py:64
+msgid "Welcome back, "
+msgstr "Velkommen tilbake, "
+
+#: server.py:68
+msgid "Are you already checked in?"
+msgstr "Er du alt sjekket inn?"
+
+#: server.py:74
+msgid "Something went wrong. Are you registered?"
+msgstr ""
+
+#: server.py:83
+msgid "See you soon, "
+msgstr ""
+
+#: server.py:87
+msgid "Are you already checked out?"
+msgstr ""
+
+#: server.py:93
+msgid "Something went wrong!"
+msgstr ""
+
+#: server.py:98
+msgid "Invalid parameter?"
+msgstr ""
+
+#: server.py:121
+msgid "Are you sure you're not already registered?"
+msgstr ""
+
+#: server.py:123
+msgid "Something went wrong, try again later"
+msgstr ""
+
+#: server.py:126
+msgid "Welcome, "
+msgstr ""
+
+#: server.py:128
+msgid "Missing some items..."
+msgstr ""
+
+#: server.py:131
+msgid "Something wrong happened!<br />Already registered?"
+msgstr ""
+
+#: server.py:139 server.py:146
+msgid "Still here!"
+msgstr ""
+
+#: templates/index.html:4
+msgid "Logging in users in pincheckin"
+msgstr ""
+
+#: templates/index.html:19
+msgid "Welcome!"
+msgstr ""
+
+#: templates/index.html:47
+msgid "Player tag"
+msgstr ""
+
+#: templates/index.html:57
+msgid "Check in"
+msgstr ""
+
+#: templates/index.html:60
+msgid "Check out!"
+msgstr ""
+
+#: templates/index.html:67
+msgid "New user!"
+msgstr ""
+
+#: templates/list.html:4
+msgid "Visitors"
+msgstr ""
+
+#: templates/list.html:36
+msgid "Date"
+msgstr "Dato"
+
+#: templates/list.html:36
+msgid "Tag"
+msgstr "Tag"
+
+#: templates/list.html:36
+msgid "From"
+msgstr "Fra"
+
+#: templates/list.html:36
+msgid "To"
+msgstr "Til"
+
+#: templates/menu.html:2
+msgid "Home"
+msgstr ""
+
+#: templates/menu.html:3
+msgid "Entries"
+msgstr ""
+
+#: templates/menu.html:4
+msgid "Checked in"
+msgstr ""
+
+#: templates/message.html:3
+msgid "Pincheckin"
+msgstr ""

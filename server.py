@@ -27,13 +27,17 @@ from flask import render_template_string
 from flask import Response
 from waitress import serve
 import gettext
+from flask_babel import Babel
 
-localedir = './locale'
-translate = gettext.translation('pincheckin', localedir, fallback=True)
+localedir = './translations/'
+translate = gettext.translation('pincheckin', localedir, fallback=True,languages=['en','no'])
 _ = translate.gettext
 
 api = Flask(__name__)
-api.jinja_options['extensions'].append('jinja2.ext.i18n')
+babel = Babel(api, default_locale='nb_NO')
+api.config['BABEL_DEFAULT_LOCALE'] = 'nb_NO'
+
+
                   
 def render_js(fname, **kwargs):
     with open(fname) as fin:

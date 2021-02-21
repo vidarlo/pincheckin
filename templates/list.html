@@ -1,7 +1,7 @@
 
 <html>
 <head>
-<title>Besøk</title>
+<title>{{ _('Visitors') }} </title>
 <meta charset="utf-8"/>
 <link rel="stylesheet"  type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.bfk.css') }}">
 </head>
@@ -33,7 +33,7 @@
 								border-top-right-radius: 20px;
        border-top-left-radius: 20px">
 
- <th>Dato</th> <th>Tag</th><th>From</th><th>To</th></thead>
+  <th>{{ _('Date') }}</th> <th>{{ _('Tag') }}</th><th>{{ _('From') }}</th><th>{{ _('To') }}</th></thead>
 <tbody  class="table table-dark-striped" style="	border:solid;
 												 	border-color: rgba(92,184,92,.75);
 												 	border-bottom-left-radius: 30px;
