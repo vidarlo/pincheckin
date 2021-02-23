@@ -64,6 +64,10 @@ def checkin():
                 js = render_js('static/scripts.js', a=3000)
                 return render_template('message.html',
                                        message=_('Welcome back, ') + request.form['tag'], returnscript = js)
+            elif id == -2:
+                return render_template('message.html',
+                                       message=_('Are you sure you\'re registered?'),
+                                       fault=True)
             else:
                 js = render_js('static/scripts.js', a=30000)
                 return render_template('message.html',

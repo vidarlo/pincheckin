@@ -58,6 +58,9 @@ def insert_checkin(conn, tag):
         else:
             #Open checkins...
             return -1
+    else:
+        #No such user
+        return -2
                 
 
 def insert_checkout(conn, tag):
