@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-02-21 19:13+0100\n"
+"POT-Creation-Date: 2021-02-23 17:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,51 +25,55 @@ msgstr ""
 msgid "Welcome back, "
 msgstr ""
 
-#: server.py:70
+#: server.py:69
+msgid "Are you sure you're registered?"
+msgstr ""
+
+#: server.py:74
 msgid "Are you already checked in?"
 msgstr ""
 
-#: server.py:76
+#: server.py:80
 msgid "Something went wrong. Are you registered?"
 msgstr ""
 
-#: server.py:85
+#: server.py:89
 msgid "See you soon, "
 msgstr ""
 
-#: server.py:89
+#: server.py:93
 msgid "Are you already checked out?"
 msgstr ""
 
-#: server.py:95
+#: server.py:99
 msgid "Something went wrong!"
 msgstr ""
 
-#: server.py:100
+#: server.py:104
 msgid "Invalid parameter?"
 msgstr ""
 
-#: server.py:123
+#: server.py:127
 msgid "Are you sure you're not already registered?"
 msgstr ""
 
-#: server.py:125
+#: server.py:129
 msgid "Something went wrong, try again later"
 msgstr ""
 
-#: server.py:128
+#: server.py:132
 msgid "Welcome, "
 msgstr ""
 
-#: server.py:130
+#: server.py:134
 msgid "Missing some items..."
 msgstr ""
 
-#: server.py:133
+#: server.py:137
 msgid "Something wrong happened!<br />Already registered?"
 msgstr ""
 
-#: server.py:141 server.py:148
+#: server.py:145 server.py:152
 msgid "Still here!"
 msgstr ""
 
@@ -117,19 +121,19 @@ msgstr ""
 msgid "To"
 msgstr ""
 
-#: templates/list.html:60
+#: templates/list.html:61
 msgid "Check out "
 msgstr ""
 
-#: templates/menu.html:2
+#: templates/menu.html:3
 msgid "Home"
 msgstr ""
 
-#: templates/menu.html:3
+#: templates/menu.html:5
 msgid "Entries"
 msgstr ""
 
-#: templates/menu.html:4
+#: templates/menu.html:6
 msgid "Checked in"
 msgstr ""
 
