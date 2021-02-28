@@ -144,21 +144,19 @@ def adduser():
 def add_guest():
     try:
         conn=db.create_connection(config.DBFile())
-        print("koblet til DB")
         if request.form['name'] and request.form['email'] and request.form['phone']:
-            print("fant parameter, prøver å koble til")
             retval = db.insert_guest_checkin(conn,
                                  request.form['email'],
                                  request.form['phone'],
                                  request.form['name'])
-    
+            js = render_js('static/scripts.js', a=60000)
             return render_template('message.html',
-                                       message=_('Welcome, ') + request.form['name'])
+                                       message=_('Welcome, ') + request.form['name'], guest=True, returnscript = js)
         else:
             return render_template('message.html', message=_('Missing some items...'))
     except:
         return render_template('message.html',
-                               message=_('Something wrong happened!<br />Already registered?'))
+                               message=_('Something wrong happened!'))
 
 
 
@@ -175,6 +173,12 @@ def formattime_onlydate_filter(s,format="%d. %b"):
         return datetime.datetime.fromtimestamp(s).strftime(format)
     else:
         return _('Still here!')
+
+def formattime_full(s,format="%d. %b   %H:%M"):
+    if isinstance(s, int):
+        return datetime.datetime.fromtimestamp(s).strftime(format)
+    else:
+        return _('Something is fucked')
 
     
 @api.route("/list")
@@ -235,9 +239,17 @@ if __name__ == '__main__':
         PRIMARY KEY("id" AUTOINCREMENT)
 );
         '''
+        sql_guest_checkins = '''CREATE TABLE "guest_checkins" (
+        "time_stamp"    INTEGER,
+        "name"  TEXT,
+        "email" TEXT,
+        "phone" TEXT
+);
+        '''
         cur = conn.cursor()
         cur.execute(sql_users)
         cur.execute(sql_checkins)
+        cur.execute(sql_guest_checkins)
         conn.commit()
         conn.close()
     serve(api, port=config.listen_port(), host=config.listen_ip())

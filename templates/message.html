@@ -22,11 +22,31 @@
 <br>
   {% if fault is defined %}
   <div class="warning">
+
     <img src="{{ url_for('static', filename='warning.svg') }}" />
       </div>
   {% endif %}
-  <div class="message">
+
+    <br>
+    <br>
+    <br>
+
+<div class="message">
    <h1> {{ message }}</h1>
     </div>
+
+
+  {% if guest is defined %}
+    <div class="guest" style="margin: auto;">
+    <br>
+    <h2>Scann QR-koden for å gå rett til betaling</h2>
+    <br>
+    <br>
+    <img src="{{ url_for('static', filename='qr-link.png') }}"  style="width: 55%; height: auto; display: block; margin:auto;"/>
+      </div>
+  {% endif %}
+
+
+  
 </body>
 </html>

@@ -201,6 +201,12 @@ img {
   border-style: none;
 }
 
+.logo-front {
+  max-width: 25%;
+  margin-left:9%;
+  margin-top: 9%
+}
+
 svg {
   overflow: hidden;
   vertical-align: middle;
@@ -2458,7 +2464,7 @@ textarea.form-control {
   background-color: transparent;
   border: 1px solid transparent;
   padding: .375rem .75rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   line-height: 1.5;
   border-radius: .25rem;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
@@ -10225,7 +10231,8 @@ background-color: #f75f54;
 }
 .menu
 {
-  margin-right: 5%;
+  width: 33%;
+  float: left;
 }
 
 }
