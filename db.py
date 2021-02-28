@@ -124,12 +124,14 @@ def insert_guest_checkin(conn, email,phone, name):
     """
     sql = '''INSERT INTO guest_checkins(email,phone, name) VALUES(?,?,?) '''
     try:
-        print("prøver å koble til DB")
+        print("prøver å koble til DB, i db.py")
         cur = conn.cursor()
-        print("koblet til DB")
+        print("koblet til DB i db.py")
         time_stamp = int(time.time())
         cur.execute(sql, (email, phone, name, time_stamp))
+        print("Har eksekvert DB-kommando")
         conn.commit()
+        print("DB lukket")
     except sqlite3.IntegrityError:
         return -1
 
