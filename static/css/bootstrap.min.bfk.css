@@ -112,8 +112,8 @@ li {
 
 #menu {
   position: fixed;
-  right: 2%;
-  top: 2%;
+   bottom: 4%;
+   margin: auto;
 }
 
 ol ol,ol ul,ul ol,ul ul {
@@ -2466,7 +2466,7 @@ textarea.form-control {
   padding: .375rem .75rem;
   font-size: 1.5rem;
   line-height: 1.5;
-  border-radius: .25rem;
+  border-radius: .4rem;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
@@ -5346,7 +5346,11 @@ a.badge-dark.focus,a.badge-dark:focus {
 .list-group-item {
   position: relative;
   display: block;
-  padding: .75rem 1.25rem;
+     padding-left: 40%;
+     padding-top: 3%;
+     padding-bottom: 3%;
+   padding-right:40%;
+   margin:0 auto;
   margin-bottom: -1px;
   background-color: #fff;
   border: 1px solid rgba(0,0,0,.125);
