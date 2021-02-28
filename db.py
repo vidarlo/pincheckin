@@ -112,6 +112,57 @@ def new_user(conn, tag, email,phone, name):
     else:
         raise
         return -2
+
+
+def insert_guest_checkin(conn, email,phone, name):
+    """
+    Inserts new entry in guest_checkins.
+    :param name: name of user
+    :param conn: SQL Connection
+    
+
+    """
+    sql = '''INSERT INTO guest_checkins(email,phone, name) VALUES(?,?,?) '''
+    try:
+        print("prøver å koble til DB")
+        cur = conn.cursor()
+        print("koblet til DB")
+        time_stamp = int(time.time())
+        cur.execute(sql, (email, phone, name, time_stamp))
+        conn.commit()
+    except sqlite3.IntegrityError:
+        return -1
+
+
+
+
+
+"""
+    
+    userid = get_userid(conn,tag.upper())
+    if userid > 0:
+        sql = '''SELECT checkout FROM checkins WHERE user=? AND checkout is null'''
+        cur = conn.cursor()
+        cur.execute(sql, (userid,))
+        data=cur.fetchall()
+        if len(data)==0:
+            sql = '''INSERT INTO checkins(user, checkin) VALUES(?,?)'''
+            try:
+                cur = conn.cursor()
+                time_stamp = int(time.time())
+                cur.execute(sql, (userid, time_stamp))
+                conn.commit()
+                return cur.lastrowid
+            except:
+                raise
+        else:
+            #Open checkins...
+            return -1
+    else:
+        #No such user
+        return -2
+                
+"""
         
 def get_userid(conn,tag):
     """

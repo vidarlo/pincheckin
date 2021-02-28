@@ -113,6 +113,10 @@ def index():
 def register():
     return render_template('newuser.html')
 
+@api.route("/guest")
+def guest():
+    return render_template('guestuser.html')
+
 @api.route("/register/add",methods=['POST'])
 def adduser():
     try:
@@ -135,6 +139,27 @@ def adduser():
     except:
         return render_template('message.html',
                                message=_('Something wrong happened!<br />Already registered?'))
+
+@api.route("/guest/add",methods=['POST'])
+def add_guest():
+    try:
+        conn=db.create_connection(config.DBFile())
+        print("koblet til DB")
+        if request.form['name'] and request.form['email'] and request.form['phone']:
+            print("fant parameter, prøver å koble til")
+            retval = db.insert_guest_checkin(conn,
+                                 request.form['email'],
+                                 request.form['phone'],
+                                 request.form['name'])
+    
+            return render_template('message.html',
+                                       message=_('Welcome, ') + request.form['name'])
+        else:
+            return render_template('message.html', message=_('Missing some items...'))
+    except:
+        return render_template('message.html',
+                               message=_('Something wrong happened!<br />Already registered?'))
+
 
 
 @api.template_filter('formattime')

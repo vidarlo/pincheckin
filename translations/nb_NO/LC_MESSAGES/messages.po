@@ -85,7 +85,7 @@ msgstr "Velkommen!"
 
 #: templates/index.html:47 templates/newuser.html:33
 msgid "Player tag"
-msgstr "Spiller-tag"
+msgstr "Spiller-tag (tre bokstaver)"
 
 #: templates/index.html:57
 msgid "Check in"
@@ -141,7 +141,7 @@ msgstr "Pincheckin"
 
 #: templates/newuser.html:4
 msgid "Registering new users in pincheckin"
-msgstr "Registrer nye brukere i pincheckin"
+msgstr "Registrerer nye brukere i pincheckin"
 
 #: templates/newuser.html:24
 msgid "Welcome"

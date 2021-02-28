@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+    <title>{{ _("Registering new users in pincheckin") }}</title>
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.bfk.css') }}">
+ 
+
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+
+</head>
+<body>
+
+<br>
+
+
+ <div >
+    <a href="{{ url_for('index') }}">
+    <img src="{{ url_for('static', filename='back.png') }}" class="spinny" >
+    </a>
+  </div>
+ 
+ <div style="margin:0 auto;">
+    <h1>{{ _("Welcome") }}</h1>
+    <h2>{{ _("Register a user below") }}</h2>
+</div>
+
+<br>
+<br>
+    <form id="form" action="{{ url_for('add_guest') }}" title="" method="post" >
+      <div id="tag" >
+	<p>
+        <input type="text" class="media form-pincheckin" name="name" placeholder="{{ _("Name") }}">
+    <br>   
+        <input type="text" contenteditable="true"   class="media form-pincheckin" name="email" placeholder="{{ _("E-Mail") }}">
+    <br>   
+        <input type="text" class=" media form-pincheckin" name="phone" placeholder="{{ _("Phone number") }}">
+    </p>
+
+	<div>
+        <button type="submit" class="btn btn-success" style="margin-left: 25%;">{{ _("Create") }}</button>
+	</div>
+  
+    </form>
+</div>
+</body>
+</html>
+
