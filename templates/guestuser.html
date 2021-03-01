@@ -13,12 +13,14 @@
 
 <br>
 
-
- <div >
-    <a href="{{ url_for('index') }}">
-    <img src="{{ url_for('static', filename='back.png') }}" class="spinny" >
-    </a>
+ <div class="menu">
+    {% include 'menu.html' %}
   </div>
+<br>
+<br>
+<br>
+<br>
+<br>
  
  <div style="margin:0 auto;">
     <h1>{{ _("Welcome") }}</h1>
@@ -36,7 +38,8 @@
     <br>   
         <input type="text" class=" media form-pincheckin" name="phone" placeholder="{{ _("Phone number") }}">
     </p>
-
+    <br>
+    <br>
 	<div>
         <button type="submit" class="btn btn-success" style="margin-left: 25%;">{{ _("Create") }}</button>
 	</div>

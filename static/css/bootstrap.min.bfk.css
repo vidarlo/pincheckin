@@ -1965,8 +1965,9 @@ pre code {
 .form-pincheckin{
 	border: solid 1px black;
 	border-radius: 5px;
-    min-width: 50px; 
-    max-width: 300px;
+    min-width: 50%;
+    max-width: 100%;
+    font-size: 2rem;
     text-align: center;
     margin-left: 25%;
 }
@@ -2476,6 +2477,9 @@ textarea.form-control {
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+#guest {
+  font-size:2.5rem;
+}
 @media (prefers-reduced-motion:reduce) {
   .btn {
     transition: none;
