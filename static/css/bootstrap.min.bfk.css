@@ -111,9 +111,13 @@ li {
 }
 
 #menu {
+  width: 92%;
   position: fixed;
-   bottom: 4%;
-   margin: auto;
+   top: 2.5%;
+margin-left:4%;
+font-size: 1.5rem;
+   text-align: center;
+   height: 3.5rem;
 }
 
 ol ol,ol ul,ul ol,ul ul {
@@ -203,8 +207,10 @@ img {
 
 .logo-front {
   max-width: 25%;
-  margin-left:9%;
-  margin-top: 9%
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  margin-top: 14%
 }
 
 svg {
@@ -5346,11 +5352,8 @@ a.badge-dark.focus,a.badge-dark:focus {
 .list-group-item {
   position: relative;
   display: block;
-     padding-left: 40%;
-     padding-top: 3%;
-     padding-bottom: 3%;
-   padding-right:40%;
-   margin:0 auto;
+ width:25%%;
+ text-align:center
   margin-bottom: -1px;
   background-color: #fff;
   border: 1px solid rgba(0,0,0,.125);
@@ -10235,8 +10238,8 @@ background-color: #f75f54;
 }
 .menu
 {
-  width: 33%;
-  float: left;
+  width: 100%;
+  margin: 0 auto;
 }
 
 }
