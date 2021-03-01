@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-02-23 17:54+0100\n"
+"POT-Creation-Date: 2021-03-01 15:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.9.0\n"
 
 #: server.py:51
 msgid "pong"
@@ -53,76 +53,112 @@ msgstr ""
 msgid "Invalid parameter?"
 msgstr ""
 
-#: server.py:127
+#: server.py:131
 msgid "Are you sure you're not already registered?"
 msgstr ""
 
-#: server.py:129
+#: server.py:133
 msgid "Something went wrong, try again later"
 msgstr ""
 
-#: server.py:132
+#: server.py:136 server.py:154
 msgid "Welcome, "
 msgstr ""
 
-#: server.py:134
+#: server.py:138 server.py:156
 msgid "Missing some items..."
 msgstr ""
 
-#: server.py:137
+#: server.py:141
 msgid "Something wrong happened!<br />Already registered?"
 msgstr ""
 
-#: server.py:145 server.py:152
+#: server.py:159
+msgid "Something wrong happened!"
+msgstr ""
+
+#: server.py:168 server.py:175
 msgid "Still here!"
+msgstr ""
+
+#: server.py:181
+msgid "Something is fucked"
+msgstr ""
+
+#: templates/guestlist.html:4 templates/list.html:4
+msgid "Visitors"
+msgstr ""
+
+#: templates/guestlist.html:29 templates/list.html:33
+msgid "Date"
+msgstr ""
+
+#: templates/guestlist.html:29 templates/list.html:33
+msgid "Tag"
+msgstr ""
+
+#: templates/guestlist.html:29 templates/list.html:33
+msgid "From"
+msgstr ""
+
+#: templates/guestlist.html:29 templates/list.html:33
+msgid "To"
+msgstr ""
+
+#: templates/guestlist.html:54 templates/list.html:58
+msgid "Check out "
+msgstr ""
+
+#: templates/guestuser.html:4 templates/newuser.html:4
+msgid "Registering new users in pincheckin"
+msgstr ""
+
+#: templates/guestuser.html:26 templates/newuser.html:26
+msgid "Welcome"
+msgstr ""
+
+#: templates/guestuser.html:27 templates/newuser.html:27
+msgid "Register a user below"
+msgstr ""
+
+#: templates/guestuser.html:35 templates/newuser.html:37
+msgid "Name"
+msgstr ""
+
+#: templates/guestuser.html:37 templates/newuser.html:39
+msgid "E-Mail"
+msgstr ""
+
+#: templates/guestuser.html:39 templates/newuser.html:41
+msgid "Phone number"
+msgstr ""
+
+#: templates/guestuser.html:44
+msgid "Register guest visit"
 msgstr ""
 
 #: templates/index.html:4
 msgid "Logging in users in pincheckin"
 msgstr ""
 
-#: templates/index.html:19
+#: templates/index.html:21
 msgid "Welcome!"
 msgstr ""
 
-#: templates/index.html:47 templates/newuser.html:33
+#: templates/index.html:44 templates/newuser.html:35
 msgid "Player tag"
 msgstr ""
 
-#: templates/index.html:57
+#: templates/index.html:50
 msgid "Check in"
 msgstr ""
 
-#: templates/index.html:60
+#: templates/index.html:56
 msgid "Check out!"
 msgstr ""
 
-#: templates/index.html:67
-msgid "New user!"
-msgstr ""
-
-#: templates/list.html:4
-msgid "Visitors"
-msgstr ""
-
-#: templates/list.html:36
-msgid "Date"
-msgstr ""
-
-#: templates/list.html:36
-msgid "Tag"
-msgstr ""
-
-#: templates/list.html:36
-msgid "From"
-msgstr ""
-
-#: templates/list.html:36
-msgid "To"
-msgstr ""
-
-#: templates/list.html:61
-msgid "Check out "
+#: templates/index.html:70
+msgid "Guest visit"
 msgstr ""
 
 #: templates/menu.html:3
@@ -137,35 +173,15 @@ msgstr ""
 msgid "Checked in"
 msgstr ""
 
+#: templates/menu.html:7
+msgid "New user!"
+msgstr ""
+
 #: templates/message.html:3
 msgid "Pincheckin"
 msgstr ""
 
-#: templates/newuser.html:4
-msgid "Registering new users in pincheckin"
-msgstr ""
-
-#: templates/newuser.html:24
-msgid "Welcome"
-msgstr ""
-
-#: templates/newuser.html:25
-msgid "Register a user below"
-msgstr ""
-
-#: templates/newuser.html:35
-msgid "Name"
-msgstr ""
-
-#: templates/newuser.html:37
-msgid "E-Mail"
-msgstr ""
-
-#: templates/newuser.html:39
-msgid "Phone number"
-msgstr ""
-
-#: templates/newuser.html:43
+#: templates/newuser.html:47
 msgid "Create"
 msgstr ""
 

@@ -57,7 +57,7 @@ msgstr "Er du sikker på at du ikke allerede er registrert?"
 
 #: server.py:125
 msgid "Something went wrong, try again later"
-msgstr "\"Noe gikk galt. Prøv igjen sener"
+msgstr "\"Noe gikk galt. Prøv igjen senere"
 
 #: server.py:128
 msgid "Welcome, "
@@ -69,7 +69,7 @@ msgstr "Mangler noen punkter..."
 
 #: server.py:133
 msgid "Something wrong happened!<br />Already registered?"
-msgstr "Noe gikk galt! <br />Allerede registrert?"
+msgstr "Noe gikk galt! Allerede registrert?"
 
 #: server.py:141 server.py:148
 msgid "Still here!"
@@ -166,3 +166,12 @@ msgstr "Telefonnummer"
 #: templates/newuser.html:43
 msgid "Create"
 msgstr "Opprett"
+
+#: templates/index.html:70
+msgid "Guest visit"
+msgstr "Gjestebesøk"
+
+#: templates/guestuser.html:44
+msgid "Register guest visit"
+msgstr "Registrer gjestebesøk"
+

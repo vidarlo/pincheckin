@@ -184,7 +184,7 @@ def formattime_full(s,format="%d. %b   %H:%M"):
 @api.route("/list")
 def list():
     conn=db.create_connection(config.DBFile())
-    visits = db.get_entries(conn,start = 0, count=10)
+    visits = db.get_entries(conn,start = 0, count=15)
     conn.close()
     return render_template('list.html', visits = visits)
 
