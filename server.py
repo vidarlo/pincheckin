@@ -113,6 +113,10 @@ def index():
 def register():
     return render_template('newuser.html')
 
+@api.route("/guest")
+def guest():
+    return render_template('guestuser.html')
+
 @api.route("/register/add",methods=['POST'])
 def adduser():
     try:
@@ -136,6 +140,25 @@ def adduser():
         return render_template('message.html',
                                message=_('Something wrong happened!<br />Already registered?'))
 
+@api.route("/guest/add",methods=['POST'])
+def add_guest():
+    try:
+        conn=db.create_connection(config.DBFile())
+        if request.form['name'] and request.form['email'] and request.form['phone']:
+            retval = db.insert_guest_checkin(conn,
+                                 request.form['email'],
+                                 request.form['phone'],
+                                 request.form['name'])
+            js = render_js('static/scripts.js', a=60000)
+            return render_template('message.html',
+                                       message=_('Welcome, ') + request.form['name'], guest=True, returnscript = js)
+        else:
+            return render_template('message.html', message=_('Missing some items...'))
+    except:
+        return render_template('message.html',
+                               message=_('Something wrong happened!'))
+
+
 
 @api.template_filter('formattime')
 def formattime_filter(s,format="%H:%M"):
@@ -151,11 +174,17 @@ def formattime_onlydate_filter(s,format="%d. %b"):
     else:
         return _('Still here!')
 
+def formattime_full(s,format="%d. %b   %H:%M"):
+    if isinstance(s, int):
+        return datetime.datetime.fromtimestamp(s).strftime(format)
+    else:
+        return _('Something is fucked')
+
     
 @api.route("/list")
 def list():
     conn=db.create_connection(config.DBFile())
-    visits = db.get_entries(conn,start = 0, count=10)
+    visits = db.get_entries(conn,start = 0, count=15)
     conn.close()
     return render_template('list.html', visits = visits)
 
@@ -210,9 +239,17 @@ if __name__ == '__main__':
         PRIMARY KEY("id" AUTOINCREMENT)
 );
         '''
+        sql_guest_checkins = '''CREATE TABLE "guest_checkins" (
+        "time_stamp"    INTEGER,
+        "name"  TEXT,
+        "email" TEXT,
+        "phone" TEXT
+);
+        '''
         cur = conn.cursor()
         cur.execute(sql_users)
         cur.execute(sql_checkins)
+        cur.execute(sql_guest_checkins)
         conn.commit()
         conn.close()
     serve(api, port=config.listen_port(), host=config.listen_ip())

@@ -1,8 +1,10 @@
-<div class="list-group" id="menu">
+<div class="list-group list-group-horizontal" id="menu">
  
   <a href="{{ url_for('index') }}" class="list-group-item list-group-item-action list-group-item-primary">{{ _('Home') }}</a>
 
   <a href="{{ url_for('list') }}" class="list-group-item list-group-item-action list-group-item-success">{{ _('Entries') }}</a>
   <a href="{{ url_for('list_checkedin') }}" class="list-group-item list-group-item-action list-group-item-danger">{{ _('Checked in') }}</a>
+  <a href="{{ url_for('register') }}" class="list-group-item list-group-item-action list-group-item-warning">{{ _('New user!') }}</a>
+ 
   
 </div>
