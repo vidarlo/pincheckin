@@ -132,37 +132,6 @@ def insert_guest_checkin(conn, email,phone, name):
         conn.commit()
     except sqlite3.IntegrityError:
         return -1
-
-
-
-
-
-"""
-    
-    userid = get_userid(conn,tag.upper())
-    if userid > 0:
-        sql = '''SELECT checkout FROM checkins WHERE user=? AND checkout is null'''
-        cur = conn.cursor()
-        cur.execute(sql, (userid,))
-        data=cur.fetchall()
-        if len(data)==0:
-            sql = '''INSERT INTO checkins(user, checkin) VALUES(?,?)'''
-            try:
-                cur = conn.cursor()
-                time_stamp = int(time.time())
-                cur.execute(sql, (userid, time_stamp))
-                conn.commit()
-                return cur.lastrowid
-            except:
-                raise
-        else:
-            #Open checkins...
-            return -1
-    else:
-        #No such user
-        return -2
-                
-"""
         
 def get_userid(conn,tag):
     """
@@ -175,6 +144,21 @@ def get_userid(conn,tag):
     try:
         cur = conn.cursor()
         cur.execute(sql, (tag.upper(),))
+        return cur.fetchone()[0]
+    except:
+        return -1
+
+def get_usertag(conn,serial):
+    """
+    Get user id from tag
+    :param conn: SQL Connection
+    :param tag: User tag
+    :return id: User ID or -1 for unknown user
+    """
+    sql = '''SELECT tag FROM users WHERE serial=?'''
+    try:
+        cur = conn.cursor()
+        cur.execute(sql, (serial,))
         return cur.fetchone()[0]
     except:
         return -1
