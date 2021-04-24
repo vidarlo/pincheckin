@@ -15,7 +15,8 @@ def listen_ip():
 def listen_port():
     return(config['Server']['listen_port'])
 
-
+def get_config(section, param):
+    return(config[section][param])
     
           
 
