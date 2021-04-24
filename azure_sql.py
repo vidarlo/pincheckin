@@ -23,7 +23,7 @@ def get_connstring():
     print(token)
     
     SQL_COPT_SS_ACCESS_TOKEN = 1256 
-    connString = "Driver={ODBC Driver 17 for SQL Server};SERVER=" + db_server + ";DATABASE=" + db_name + "Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+    connString = "Driver={ODBC Driver 17 for SQL Server};SERVER=" + db_server + ",1433;DATABASE=" + db_name + ";Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30"
     #get bytes from token obtained
     tokenb = bytes(token["accessToken"], "UTF-8")
     exptoken = b'';
@@ -31,7 +31,6 @@ def get_connstring():
         exptoken += bytes({i});
         exptoken += bytes(1);
     tokenstruct = struct.pack("=i", len(exptoken)) + exptoken;
-    return(connString, tokenstruct)
+    return(connString, tokenstruct, SQL_COPT_SS_ACCESS_TOKEN)
 
-connstring, tokenstruct = get_connstring()
-print(connstring)
+

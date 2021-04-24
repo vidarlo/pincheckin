@@ -18,16 +18,21 @@ import sqlite3
 import time
 import datetime
 import server
+import azure_sql
+import pyodbc
 
 
-def create_connection(db_file):
-    """ Create a connection to sqllite that we can use.
-    :param db_file: specifies database file.
+def create_connection():
+    """ Create a connection to database that we can use.
     :return: Connection object or None
     """
     conn = None
     try:
-        conn = sqlite3.connect(db_file)
+        connstring, tokenstruct, tokenopt = azure_sql.get_connstring()
+        print(connstring)
+        print(tokenstruct)
+        print(tokenopt)
+        conn = pyodbc.connect(connstring, attrs_before = { tokenopt:tokenstruct})
         return conn
     except Error as e:
         print(e)
