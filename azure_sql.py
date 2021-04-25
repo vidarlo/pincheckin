@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import adal, pyodbc
+import msal, pyodbc
 import config, struct
 def get_connstring():
     tenant_id = config.get_config('Azure', 'tenant_id')
@@ -11,21 +11,12 @@ def get_connstring():
     
     auth_url = ('https://login.microsoftonline.com/' + tenant_id)
     print(auth_url)
-    
-    context = adal.AuthenticationContext(
-        auth_url, api_version=None
-    )
-    
-    token = context.acquire_token_with_client_credentials(
-        "https://database.windows.net/",
-        app_id,
-        secret)
-    print(token)
-    
+    context = msal.ConfidentialClientApplication(app_id, secret, authority=auth_url)
+    token = context.acquire_token_for_client("https://database.windows.net//.default")
     SQL_COPT_SS_ACCESS_TOKEN = 1256 
     connString = "Driver={ODBC Driver 17 for SQL Server};SERVER=" + db_server + ",1433;DATABASE=" + db_name + ";Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30"
     #get bytes from token obtained
-    tokenb = bytes(token["accessToken"], "UTF-8")
+    tokenb = bytes(token["access_token"], "UTF-8")
     exptoken = b'';
     for i in tokenb:
         exptoken += bytes({i});
