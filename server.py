@@ -58,7 +58,7 @@ def ping():
 def checkin():
     if request.form.get('Checkin'):
         try:
-            conn=db.create_connection(config.DBFile())
+            conn=db.create_connection()
             id = db.insert_checkin(conn,tag=request.form['tag'])
             if id > 0:
                 js = render_js('static/scripts.js', a=3000)
@@ -81,7 +81,7 @@ def checkin():
 
     elif request.form.get('Checkout'):
         try:
-            conn=db.create_connection(config.DBFile())
+            conn=db.create_connection()
             id = db.insert_checkout(conn,tag=request.form['tag'])
             name = db.get_name(conn,request.form['tag'])
             if id > 0:
@@ -120,7 +120,7 @@ def guest():
 @api.route("/register/add",methods=['POST'])
 def adduser():
     try:
-        conn=db.create_connection(config.DBFile())
+        conn=db.create_connection()
         if request.form['name'] and request.form['tag'] and request.form['email'] and request.form['phone']:
             retval = db.new_user(conn,
                                  request.form['tag'],
@@ -143,7 +143,7 @@ def adduser():
 @api.route("/guest/add",methods=['POST'])
 def add_guest():
     try:
-        conn=db.create_connection(config.DBFile())
+        conn=db.create_connection()
         if request.form['name'] and request.form['email'] and request.form['phone']:
             retval = db.insert_guest_checkin(conn,
                                  request.form['email'],
@@ -183,14 +183,14 @@ def formattime_full(s,format="%d. %b   %H:%M"):
     
 @api.route("/list")
 def list():
-    conn=db.create_connection(config.DBFile())
+    conn=db.create_connection()
     visits = db.get_entries(conn,start = 0, count=15)
     conn.close()
     return render_template('list.html', visits = visits)
 
 @api.route("/list/checkout")
 def list_checkedin():
-    conn=db.create_connection(config.DBFile())
+    conn=db.create_connection()
     visits = db.get_entries(conn,start = 0, count=200, checkedin=True)
     conn.close()
     return render_template('list.html', visits = visits, checkedin=True)
@@ -208,7 +208,7 @@ def csv():
         count = int(request.form['count'])
     except:
         count = 25;
-    conn=db.create_connection(config.DBFile())
+    conn=db.create_connection()
     response = db.get_entries(conn,start = start, count=count)
     conn.close()
     csv = 'Tag, Checkin, Checkout\n'
@@ -220,7 +220,7 @@ def csv():
 
 if __name__ == '__main__':
     if not os.path.isfile(config.DBFile()):
-        conn = db.create_connection(config.DBFile())
+        conn = db.create_connection()
         sql_users = '''CREATE TABLE "users" (
         "id"    INTEGER NOT NULL UNIQUE,
         "email" TEXT,

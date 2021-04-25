@@ -29,10 +29,7 @@ def create_connection():
     conn = None
     try:
         connstring, tokenstruct, tokenopt = azure_sql.get_connstring()
-        print(connstring)
-        print(tokenstruct)
-        print(tokenopt)
-        conn = pyodbc.connect(connstring, attrs_before = { tokenopt:tokenstruct})
+        conn = pyodbc.connect(connstring, attrs_before = { tokenopt:tokenstruct })
         return conn
     except Error as e:
         print(e)
@@ -46,20 +43,22 @@ def insert_checkin(conn, tag):
     :param conn: SQL Connection
     :return: ID of row inserted
     """
-    userid = get_userid(conn,tag.upper())
-    if userid > 0:
-        sql = '''SELECT checkout FROM checkins WHERE user=? AND checkout is null'''
+    uid = get_userid(conn,tag.upper())
+    if uid > 0:
+        sql = '''SELECT checkout FROM checkins WHERE uid=? AND checkout is null'''
         cur = conn.cursor()
-        cur.execute(sql, (userid,))
+        cur.execute(sql, (uid,))
         data=cur.fetchall()
         if len(data)==0:
-            sql = '''INSERT INTO checkins(user, checkin) VALUES(?,?)'''
+            sql = '''INSERT INTO checkins(uid, checkin) VALUES(?,?)'''
             try:
                 cur = conn.cursor()
                 time_stamp = int(time.time())
-                cur.execute(sql, (userid, time_stamp))
+                cur.execute(sql, (uid, time_stamp))
+                cur.execute("SELECT @@IDENTITY AS ID;")
+                id = cur.fetchone()[0]
                 conn.commit()
-                return cur.lastrowid
+                return id
             except:
                 raise
         else:
@@ -81,8 +80,7 @@ def insert_checkout(conn, tag):
     if userid > 0:
         time_stamp = int(time.time())
         #Get last row of user
-        lr_sql = '''SELECT id FROM checkins WHERE user=? ORDER BY id DESC limit 1'''
-        
+        lr_sql = '''SELECT id FROM [checkins] WHERE uid=? and [checkout] is null'''     
         up_sql = '''UPDATE checkins SET checkout=? WHERE id=?'''
         try:
             cur = conn.cursor()
@@ -112,9 +110,11 @@ def new_user(conn, tag, email,phone, name):
     try:
         cur = conn.cursor()
         cur.execute(sql, (tag.upper(), email, phone, name))
+        cur.execute("SELECT @@IDENTITY AS ID;")
+        id = cur.fetchone()[0]
         conn.commit()
-        return cur.lastrowid
-    except sqlite3.IntegrityError:
+        return id
+    except:
         return -1
     else:
         raise
@@ -193,12 +193,12 @@ def get_entries(conn,start = 0,count = 25, checkedin = False):
     """
     sql = None
     if not checkedin:
-        sql = '''SELECT users.tag,checkins.checkin,checkins.checkout FROM checkins INNER JOIN users on users.id = checkins.user ORDER BY checkins.id DESC LIMIT ?,?'''
+        sql = '''SELECT TOP (?) [users].[tag], [checkins].[checkin],[checkins].[checkout] FROM [checkins] INNER JOIN [users] on [users].[id] = [checkins].[uid] ORDER BY [checkins].[id] DESC'''
     elif checkedin:
-        sql = '''SELECT users.tag,checkins.checkin FROM checkins INNER JOIN users on users.id = checkins.user WHERE checkins.checkout is null ORDER BY checkins.id DESC LIMIT ?,?'''  
+        sql = '''SELECT TOP (?) [users].[tag], [checkins].[checkin],[checkins].[checkout] FROM [checkins] INNER JOIN [users] on [users].[id] = [checkins].[uid] WHERE [checkins].[checkout] IS NULL ORDER BY [checkins].[id] DESC'''  
     try:
         cur = conn.cursor()
-        cur.execute(sql, (start,count))
+        cur.execute(sql, count)
         return cur.fetchall()
     except:
         raise
