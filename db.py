@@ -18,18 +18,25 @@ import sqlite3
 import time
 import datetime
 import server
-import azure_sql
-import pyodbc
-
+import mysql.connector
+import azure_auth
+import config
 
 def create_connection():
     """ Create a connection to database that we can use.
-    :return: Connection object or None
+    :return: Connection object or raise exception
     """
     conn = None
     try:
-        connstring, tokenstruct, tokenopt = azure_sql.get_connstring()
-        conn = pyodbc.connect(connstring, attrs_before = { tokenopt:tokenstruct })
+        password = azure_auth.get_credentials()
+        print(password)
+        conn = mysql.connector.connect(
+            user=config.get_config('Azure', 'db_user'),
+            password=str(azure_auth.get_credentials().value),
+            host=config.get_config('Azure', 'db_server'),
+            port=3306,
+            database=config.get_config('Azure', 'db_name'),
+            ssl_verify_cert=True)
         return conn
     except Error as e:
         print(e)
@@ -80,7 +87,7 @@ def insert_checkout(conn, tag):
     if userid > 0:
         time_stamp = int(time.time())
         #Get last row of user
-        lr_sql = '''SELECT id FROM [checkins] WHERE uid=? and [checkout] is null'''     
+        lr_sql = '''SELECT id FROM checkins WHERE uid=? and checkout is null'''     
         up_sql = '''UPDATE checkins SET checkout=? WHERE id=?'''
         try:
             cur = conn.cursor()
@@ -110,8 +117,7 @@ def new_user(conn, tag, email,phone, name):
     try:
         cur = conn.cursor()
         cur.execute(sql, (tag.upper(), email, phone, name))
-        cur.execute("SELECT @@IDENTITY AS ID;")
-        id = cur.fetchone()[0]
+        id = cur.lastrowid()
         conn.commit()
         return id
     except:
@@ -193,9 +199,10 @@ def get_entries(conn,start = 0,count = 25, checkedin = False):
     """
     sql = None
     if not checkedin:
-        sql = '''SELECT TOP (?) [users].[tag], [checkins].[checkin],[checkins].[checkout] FROM [checkins] INNER JOIN [users] on [users].[id] = [checkins].[uid] ORDER BY [checkins].[id] DESC'''
+        sql = '''SELECT users.tag,checkins.checkin,checkins.checkout FROM checkins INNER JOIN users on users.id = checkins.user ORDER BY checkins.id DESC LIMIT ?,?'''
+
     elif checkedin:
-        sql = '''SELECT TOP (?) [users].[tag], [checkins].[checkin],[checkins].[checkout] FROM [checkins] INNER JOIN [users] on [users].[id] = [checkins].[uid] WHERE [checkins].[checkout] IS NULL ORDER BY [checkins].[id] DESC'''  
+        sql = '''SELECT users.tag,checkins.checkin FROM checkins INNER JOIN users on users.id = checkins.user WHERE checkins.checkout is null ORDER BY checkins.id DESC LIMIT ?,?'''
     try:
         cur = conn.cursor()
         cur.execute(sql, count)
