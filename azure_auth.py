@@ -5,21 +5,27 @@ from azure.keyvault.secrets import SecretClient
 from azure.identity import ClientSecretCredential
 import config, struct
 import mysql.connector
-
+from datetime import datetime
 
 class dbcnx:
     def __init__(self):
         self.conn = None
+        self.pw = None
 
     def get_credentials(self):
-        tenant_id = config.get_config('Azure', 'tenant_id')
-        app_id = config.get_config('Azure', 'app_id')
-        secret = config.get_config('Azure', 'secret')
-        kv_uri = config.get_config('Azure', 'kv_uri')
-        credential = ClientSecretCredential(tenant_id, app_id, secret)
-        client = SecretClient(vault_url=kv_uri, credential=credential)
-        pw = client.get_secret('bfkdb')
-        return pw
+        if not self.pw:
+            tenant_id = config.get_config('Azure', 'tenant_id')
+            app_id = config.get_config('Azure', 'app_id')
+            secret = config.get_config('Azure', 'secret')
+            kv_uri = config.get_config('Azure', 'kv_uri')
+            credential = ClientSecretCredential(tenant_id, app_id, secret)
+            client = SecretClient(vault_url=kv_uri, credential=credential)
+            self.pw = client.get_secret('bfkdb')
+        elif not self.pw.properties.expires_on == None:
+            if self.pw.properties.expires_on > datetime.now():
+                self.pw = None
+                get_credentials(self)
+        return self.pw
 
     def connect(self):
         """ Create a connection to database that we can use.
@@ -39,9 +45,7 @@ class dbcnx:
         raise
 
     def get_db(self):
-        if not self.conn:
-            return self.connect()
-        return self.conn
+        return self.connect()
 
 
 

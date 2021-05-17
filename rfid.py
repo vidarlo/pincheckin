@@ -4,6 +4,9 @@ import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 from time import sleep
 import db
+import azure_auth
+
+dbcnx = azure_auth.dbcnx()
 
 def MFRC522_Init(self):
     GPIO.output(self.NRSTPD, 1)
@@ -14,14 +17,20 @@ def readnfc():
     id, data = reader.read()
     return id
 
-conn = db.create_connection('database.db')
 
 while True:
     print("Waiting...")
-    id = readnfc()
-    print(id)
-    print(db.get_usertag(conn,id))
-    sleep(2)
+    serial = readnfc()
+    print(serial)
+    conn = dbcnx.get_db()
+    tag = db.get_usertag(conn,serial)
+    res = db.insert_checkin(conn,tag)
+    if res > 0:
+        #Success...
+    elif res == -1:
+        #User is already checked in; check out
+        db.insert_checkout(conn, tag)
+    sleep(5)
 
     
 

@@ -138,12 +138,12 @@ def get_userid(conn,tag):
 
 def get_usertag(conn,serial):
     """
-    Get user id from tag
+    Get user tag from token serial
     :param conn: SQL Connection
-    :param tag: User tag
+    :param serial: User RFID serial
     :return id: User ID or -1 for unknown user
     """
-    sql = '''SELECT tag FROM users WHERE serial=?'''
+    sql = '''SELECT tag FROM usertoken WHERE serial=%s'''
     try:
         cur = conn.cursor()
         cur.execute(sql, (serial,))

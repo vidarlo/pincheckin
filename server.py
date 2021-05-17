@@ -79,7 +79,7 @@ def checkin():
 
     elif request.form.get('Checkout'):
         try:
-            conn=db.create_connection()
+            conn=dbcnx.get_db()
             id = db.insert_checkout(conn,tag=request.form['tag'])
             name = db.get_name(conn,request.form['tag'])
             if id > 0:
@@ -118,7 +118,7 @@ def guest():
 @api.route("/register/add",methods=['POST'])
 def adduser():
     try:
-        conn=db.create_connection()
+        conn=dbcnx.get_db()
         if request.form['name'] and request.form['tag'] and request.form['email'] and request.form['phone']:
             retval = db.new_user(conn,
                                  request.form['tag'],
