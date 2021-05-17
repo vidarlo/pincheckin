@@ -20,7 +20,18 @@ import datetime
 import server
 import config
 
-
+def is_checkedin(conn, tag):
+    """Checks if user is checked in.
+    :param conn: SQL Connection handle
+    :param tag: User's tag
+    :return: True for checked in
+    """
+    sql = '''SELECT tag FROM checkedin WHERE tag=%s'''
+    cur = conn.cursor()
+    cur.exequte(sql, (tag,))
+    data=cur.fetchall()
+    if len(data) == 0:
+        return False
     
 def insert_checkin(conn, tag):
     """
@@ -118,7 +129,7 @@ def insert_guest_checkin(conn, email,phone, name):
         time_stamp = int(time.time())
         cur.execute(sql, (email, phone, name, time_stamp))
         conn.commit()
-    except sqlite3.IntegrityError:
+    except:
         return -1
         
 def get_userid(conn,tag):
@@ -176,10 +187,10 @@ def get_entries(conn,start = 0,count = 25, checkedin = False):
     """
     sql = None
     if not checkedin:
-        sql = '''SELECT * FROM listall LIMIT %s,%s'''
+        sql = '''SELECT tag, checkin, checkout FROM listall ORDER BY checkin DESC LIMIT %s,%s'''
 
     elif checkedin:
-        sql = '''SELECT * FROM checkedin LIMIT %s,%s'''
+        sql = '''SELECT tag, checkin FROM checkedin ORDER BY checkin DESC LIMIT %s,%s'''
     try:
         cur = conn.cursor()
         cur.execute(sql, (start,count))

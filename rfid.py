@@ -17,21 +17,31 @@ def readnfc():
     id, data = reader.read()
     return id
 
-
-while True:
-    print("Waiting...")
-    serial = readnfc()
-    print(serial)
+def update_userstatus(serial):
     conn = dbcnx.get_db()
     tag = db.get_usertag(conn,serial)
-    res = db.insert_checkin(conn,tag)
-    if res > 0:
-        #Success...
-    elif res == -1:
-        #User is already checked in; check out
-        db.insert_checkout(conn, tag)
-    sleep(5)
+    if not tag == -1:
+        if db.ischeckedin(conn, tag):
+            db.insert_checkout(conn, tag)
+            return("Checked out")
+        else:
+            db.insert_checkin(conn, tag)
+            return("Checked in")
+    else:
+        return("No such token serial")
+        
 
+def led_checkin():
+    #Do something
+
+def led_checkout():
+    #Do something
+            
+        
+
+if __name__ == "__main__":
+    serial = readnfc()
+    print(serial)
     
-
+    
     
