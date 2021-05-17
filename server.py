@@ -18,7 +18,6 @@ import config
 import db
 import os
 import time
-import json
 import datetime
 from flask import Flask
 from flask import request
@@ -28,6 +27,7 @@ from flask import Response
 from waitress import serve
 import gettext
 from flask_babel import Babel
+import azure_auth
 
 localedir = './translations/'
 translate = gettext.translation('messages', localedir, fallback=True,languages=['nb'])
@@ -38,7 +38,7 @@ api = Flask(__name__)
 babel = Babel(api, default_locale='nb_NO')
 api.config['BABEL_DEFAULT_LOCALE'] = 'nb_NO'
 
-
+dbcnx = azure_auth.dbcnx()
                   
 def render_js(fname, **kwargs):
     with open(fname) as fin:
@@ -53,12 +53,10 @@ def ping():
 @api.route("/checkin", methods=['POST'])
 
 
-
-
 def checkin():
     if request.form.get('Checkin'):
         try:
-            conn=db.create_connection()
+            conn=dbcnx.get_db()
             id = db.insert_checkin(conn,tag=request.form['tag'])
             if id > 0:
                 js = render_js('static/scripts.js', a=3000)
@@ -143,7 +141,7 @@ def adduser():
 @api.route("/guest/add",methods=['POST'])
 def add_guest():
     try:
-        conn=db.create_connection()
+        conn=dbcnx.get_db()
         if request.form['name'] and request.form['email'] and request.form['phone']:
             retval = db.insert_guest_checkin(conn,
                                  request.form['email'],
@@ -183,16 +181,14 @@ def formattime_full(s,format="%d. %b   %H:%M"):
     
 @api.route("/list")
 def list():
-    conn=db.create_connection()
+    conn=dbcnx.get_db()
     visits = db.get_entries(conn,start = 0, count=15)
-    conn.close()
     return render_template('list.html', visits = visits)
 
 @api.route("/list/checkout")
 def list_checkedin():
-    conn=db.create_connection()
+    conn=dbcnx.get_db()
     visits = db.get_entries(conn,start = 0, count=200, checkedin=True)
-    conn.close()
     return render_template('list.html', visits = visits, checkedin=True)
     
 
@@ -208,9 +204,8 @@ def csv():
         count = int(request.form['count'])
     except:
         count = 25;
-    conn=db.create_connection()
+    conn=get_db()
     response = db.get_entries(conn,start = start, count=count)
-    conn.close()
     csv = 'Tag, Checkin, Checkout\n'
     for row in response:
         csv += row[0]+", "+str(time.ctime(row[1]))+", "+str(time.ctime(row[2]))+'\n'
@@ -219,37 +214,5 @@ def csv():
     return response
 
 if __name__ == '__main__':
-    if not os.path.isfile(config.DBFile()):
-        conn = db.create_connection()
-        sql_users = '''CREATE TABLE "users" (
-        "id"    INTEGER NOT NULL UNIQUE,
-        "email" TEXT,
-        "tag"   TEXT NOT NULL UNIQUE,
-        "phone" TEXT,
-        "name" TEXT,
-        PRIMARY KEY("id" AUTOINCREMENT)
-);
-        '''
-        sql_checkins = '''CREATE TABLE "checkins" (
-        "id"    INTEGER NOT NULL UNIQUE,
-        "user"  INTEGER,
-        "checkin"       INTEGER,
-        "checkout"      INTEGER,
-        FOREIGN KEY("user") REFERENCES "users"("id"),
-        PRIMARY KEY("id" AUTOINCREMENT)
-);
-        '''
-        sql_guest_checkins = '''CREATE TABLE "guest_checkins" (
-        "time_stamp"    INTEGER,
-        "name"  TEXT,
-        "email" TEXT,
-        "phone" TEXT
-);
-        '''
-        cur = conn.cursor()
-        cur.execute(sql_users)
-        cur.execute(sql_checkins)
-        cur.execute(sql_guest_checkins)
-        conn.commit()
-        conn.close()
     serve(api, port=config.listen_port(), host=config.listen_ip())
+
