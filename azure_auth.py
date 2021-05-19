@@ -38,11 +38,14 @@ class dbcnx:
                 host=config.get_config('Azure', 'db_server'),
                 port=3306,
                 database=config.get_config('Azure', 'db_name'),
-                ssl_verify_cert=True)
+                ssl_ca={},
+                ssl_cert={},
+                ssl_key={},
+                ssl_verify_cert=False)
             return self.conn
         except Error as e:
             print(e)
-        raise
+            raise  
 
     def get_db(self):
         return self.connect()

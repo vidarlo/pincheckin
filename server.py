@@ -95,6 +95,18 @@ def checkin():
             return render_template('message.html',
                                    fault=True,
                                    message=_('Something went wrong!'), returnscript = js)
+    elif request.form.get('Token'):
+        conn = dbcnx.get_db()
+        id = db.prepare_register_token(conn, tag=request.form['tag'])
+        if id > 0:
+            js = render_js('static/scripts.js', a=30000)
+            return render_template('message.html', message=_('Place your token on the reader. After one short blink, remove token. When both lights blink, you are registed, and can check in by placing your token on the reader again'), returnscript = js)
+        else:
+         js = render_js('static/scripts.js', a=15000)
+         return render_template('message.html',
+                                fault=True,
+                                message=_('Something went wrong!'), returnscript = js)   
+                                   
     else:
         js = render_js('static/scripts.js', a=30000)
         return render_template('message.html',

@@ -17,7 +17,6 @@
 import sqlite3
 import time
 import datetime
-import server
 import config
 
 def is_checkedin(conn, tag):
@@ -28,10 +27,12 @@ def is_checkedin(conn, tag):
     """
     sql = '''SELECT tag FROM checkedin WHERE tag=%s'''
     cur = conn.cursor()
-    cur.exequte(sql, (tag,))
+    cur.execute(sql, (tag,))
     data=cur.fetchall()
     if len(data) == 0:
         return False
+    else:
+        return True
     
 def insert_checkin(conn, tag):
     """
@@ -66,6 +67,31 @@ def insert_checkin(conn, tag):
         return -2
                 
 
+def prepare_register_token(conn, tag):
+    uid = get_userid(conn, tag)
+    if not uid == -1:
+        sql = '''INSERT INTO token(uid, serial) VALUES(%s, %s)'''
+        cur = conn.cursor()
+        #Ensure that we have only one 'free' tag.
+        cur.execute('''DELETE FROM `token` WHERE `serial` = -1''')
+        cur.execute(sql, (uid, -1))
+        conn.commit()
+        return 1
+    else:
+        return -1
+
+def register_token(conn, serial):
+    sql = '''UPDATE token SET serial=%s WHERE serial = -1'''
+    try:
+        cur = conn.cursor()
+        cur.execute(sql, (serial,))
+        conn.commit()
+        return 1
+    except:
+        raise
+
+
+
 def insert_checkout(conn, tag):
     """
     Inserts new tag into checkin.
@@ -82,9 +108,8 @@ def insert_checkout(conn, tag):
         cur.execute(lr_sql)
         checkin_id = cur.fetchone()[0]
         cur.execute(up_sql, (time_stamp, checkin_id))
-        last_id = checkin_id
         conn.commit()
-        return last_id
+        return checkin_id
     except:
         raise
     return None

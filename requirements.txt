@@ -2,3 +2,8 @@ flask
 configparser
 waitress
 Flask-Babel
+pyodbc
+azure.keyvault
+azure.keyvault.secrets
+azure.identity
+mysql.connector
