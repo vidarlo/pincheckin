@@ -58,6 +58,7 @@ def checkin():
         try:
             conn=dbcnx.get_db()
             id = db.insert_checkin(conn,tag=request.form['tag'])
+            conn.close()
             if id > 0:
                 js = render_js('static/scripts.js', a=3000)
                 return render_template('message.html',
@@ -82,6 +83,7 @@ def checkin():
             conn=dbcnx.get_db()
             id = db.insert_checkout(conn,tag=request.form['tag'])
             name = db.get_name(conn,request.form['tag'])
+            conn.close()
             if id > 0:
                 js = render_js('static/scripts.js', a=3000)
                 return render_template('message.html', message=_('See you soon, ') + request.form['tag'], returnscript = js)
@@ -98,6 +100,7 @@ def checkin():
     elif request.form.get('Token'):
         conn = dbcnx.get_db()
         id = db.prepare_register_token(conn, tag=request.form['tag'])
+        conn.close()
         if id > 0:
             js = render_js('static/scripts.js', a=30000)
             return render_template('message.html', message=_('Place your token on the reader. After one short blink, remove token. When both lights blink, you are registed, and can check in by placing your token on the reader again'), returnscript = js)
@@ -137,6 +140,7 @@ def adduser():
                                  request.form['email'],
                                  request.form['phone'],
                                  request.form['name'])
+            conn.close()
             if retval == -1:
                 return render_template('message.html', message=_('Are you sure you\'re not already registered?'))
             elif retval == -2:
@@ -159,6 +163,7 @@ def add_guest():
                                  request.form['email'],
                                  request.form['phone'],
                                  request.form['name'])
+            conn.close()
             js = render_js('static/scripts.js', a=60000)
             return render_template('message.html',
                                        message=_('Welcome, ') + request.form['name'], guest=True, returnscript = js)
@@ -195,12 +200,14 @@ def formattime_full(s,format="%d. %b   %H:%M"):
 def list():
     conn=dbcnx.get_db()
     visits = db.get_entries(conn,start = 0, count=15)
+    conn.close()
     return render_template('list.html', visits = visits)
 
 @api.route("/list/checkout")
 def list_checkedin():
     conn=dbcnx.get_db()
     visits = db.get_entries(conn,start = 0, count=200, checkedin=True)
+    conn.close()
     return render_template('list.html', visits = visits, checkedin=True)
     
 

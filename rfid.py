@@ -73,7 +73,7 @@ def update_userstatus(serial):
         msg.error_light()
         db.register_token(conn, serial)
         return("No such token serial")
-        
+    conn.close()
 
 if __name__ == "__main__":
     while True:
