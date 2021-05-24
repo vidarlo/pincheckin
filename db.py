@@ -103,12 +103,13 @@ def insert_checkout(conn, tag):
     """
     time_stamp = int(time.time())
     #Get last row of user
-    lr_sql = '''SELECT id FROM checkedin'''     
+    lr_sql = '''SELECT id FROM checkedin WHERE tag = %s'''     
     up_sql = '''UPDATE checkins SET checkout=%s WHERE id=%s'''
     try:
         cur = conn.cursor()
-        cur.execute(lr_sql)
+        cur.execute(lr_sql, (tag, ))
         checkin_id = cur.fetchone()[0]
+        
         cur.execute(up_sql, (time_stamp, checkin_id))
         conn.commit()
         return checkin_id
