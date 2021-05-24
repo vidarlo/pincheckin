@@ -2,8 +2,8 @@ FROM alpine
 
 LABEL pincheckin Vidar Løkken <vl@bitsex.net>
 
-RUN apk --update add python3 py3-pip tzdata
-RUN apk add --virtual .build-deps python3 py3-pip gcc g++ make python3-dev
+RUN apk --update add python3 py3-pip tzdata unixodbc
+RUN apk add --virtual .build-deps py3-pip gcc g++ make python3-dev  libffi-dev rust openssl-dev cargo
 
 COPY . /app
 #COPY database.db /data
