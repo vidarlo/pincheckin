@@ -75,8 +75,9 @@ def prepare_register_token(conn, tag):
         #Ensure that we have only one 'free' tag.
         cur.execute('''DELETE FROM `token` WHERE `serial` = -1''')
         cur.execute(sql, (uid, -1))
+        numrows = cur.rowcount
         conn.commit()
-        return 1
+        return numrows
     else:
         return -1
 
@@ -85,8 +86,9 @@ def register_token(conn, serial):
     try:
         cur = conn.cursor()
         cur.execute(sql, (serial,))
+        ret = cur.rowcount
         conn.commit()
-        return 1
+        return ret
     except:
         raise
 

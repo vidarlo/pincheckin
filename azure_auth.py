@@ -45,12 +45,12 @@ class dbcnx:
             return self.conn
         except Error as e:
             print(e)
-            raise  
+            raise
 
     def get_db(self):
-        return self.connect()
-
-
+        cnx = self.connect()
+        return cnx
+    
 
 if __name__ == "__main__":
     db = dbcnx()

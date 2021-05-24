@@ -36,7 +36,7 @@ class leds:
     def error_light(self):
         GPIO.output(self.out_led, GPIO.HIGH)
         GPIO.output(self.in_led, GPIO.HIGH)
-        sleep(0.5)
+        sleep(2)
         GPIO.output(self.in_led, GPIO.LOW)
         GPIO.output(self.out_led, GPIO.LOW)
 
@@ -44,6 +44,20 @@ class leds:
         GPIO.output(self.in_led, GPIO.HIGH)
         sleep(0.1)
         GPIO.output(self.in_led, GPIO.LOW)
+
+    def register_flash(self):
+        GPIO.output(self.out_led, GPIO.HIGH)
+        GPIO.output(self.in_led, GPIO.HIGH)
+        sleep(0.25)
+        GPIO.output(self.out_led, GPIO.LOW)
+        GPIO.output(self.in_led, GPIO.LOW)
+        sleep(0.25)
+        GPIO.output(self.in_led, GPIO.HIGH)
+        GPIO.output(self.out_led, GPIO.HIGH)
+        sleep(0.25)
+        GPIO.output(self.out_led, GPIO.LOW)
+        GPIO.output(self.in_led, GPIO.LOW)
+        
         
 msg = leds()
 dbcnx = azure_auth.dbcnx()
@@ -63,18 +77,25 @@ def update_userstatus(serial):
     if not tag == -1:
         if db.is_checkedin(conn, tag):
             db.insert_checkout(conn, tag)
+            conn.close()
             msg.out_light()
             return("Checked out")
         else:
             db.insert_checkin(conn, tag)
+            conn.close()
             msg.in_light()
             return("Checked in")
     else:
-        msg.error_light()
-        db.register_token(conn, serial)
-        return("No such token serial")
-    conn.close()
-
+        ret = db.register_token(conn,serial)
+        conn.close()
+        if ret > 0:
+            msg.register_flash()
+            print("Registered token")
+            print(ret)
+        else:
+            msg.error_light()
+            return("No such token serial")
+        
 if __name__ == "__main__":
     while True:
         serial = readnfc()
