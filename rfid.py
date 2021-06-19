@@ -11,8 +11,10 @@ class leds:
     def __init__(self):
         self.in_led = 3
         self.out_led = 5
+        self.flt_led = 7
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.in_led, GPIO.OUT, initial=GPIO.LOW)
+        GPIO.setup(self.flt_led, GPIO.OUT, initial=GPIO.LOW)
         GPIO.setup(self.out_led, GPIO.OUT, initial=GPIO.LOW)
 
     def in_light(self):
@@ -21,7 +23,7 @@ class leds:
         GPIO.output(self.in_led, GPIO.LOW)
         sleep(0.25)
         GPIO.output(self.in_led, GPIO.HIGH)
-        sleep(0.25)
+        sleep(5)
         GPIO.output(self.in_led, GPIO.LOW)
 
     def out_light(self):
@@ -30,15 +32,13 @@ class leds:
         GPIO.output(self.out_led, GPIO.LOW)
         sleep(0.25)
         GPIO.output(self.out_led, GPIO.HIGH)
-        sleep(0.25)
+        sleep(5)
         GPIO.output(self.out_led, GPIO.LOW)
 
     def error_light(self):
-        GPIO.output(self.out_led, GPIO.HIGH)
-        GPIO.output(self.in_led, GPIO.HIGH)
+        GPIO.output(self.flt_led, GPIO.HIGH)
         sleep(2)
-        GPIO.output(self.in_led, GPIO.LOW)
-        GPIO.output(self.out_led, GPIO.LOW)
+        GPIO.output(self.flt_led, GPIO.LOW)
 
     def rd_flash(self):
         GPIO.output(self.in_led, GPIO.HIGH)
