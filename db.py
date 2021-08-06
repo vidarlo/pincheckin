@@ -70,11 +70,12 @@ def insert_checkin(conn, tag):
 def prepare_register_token(conn, tag):
     uid = get_userid(conn, tag)
     if not uid == -1:
-        sql = '''INSERT INTO token(uid, serial) VALUES(%s, %s)'''
+        sql = '''INSERT INTO token(uid, serial, time) VALUES(%s, %s, %s)'''
         cur = conn.cursor()
         #Ensure that we have only one 'free' tag.
         cur.execute('''DELETE FROM `token` WHERE `serial` = -1''')
-        cur.execute(sql, (uid, -1))
+        ts = int(time.time())
+        cur.execute(sql, (uid, -1, ts))
         numrows = cur.rowcount
         conn.commit()
         return numrows
@@ -82,10 +83,11 @@ def prepare_register_token(conn, tag):
         return -1
 
 def register_token(conn, serial):
-    sql = '''UPDATE token SET serial=%s WHERE serial = -1'''
+    sql = '''UPDATE token SET serial=%s WHERE serial = -1 AND time>=%s'''
     try:
         cur = conn.cursor()
-        cur.execute(sql, (serial,))
+        ts = int(time.time() + 90)
+        cur.execute(sql, (serial, ts))
         ret = cur.rowcount
         conn.commit()
         return ret
