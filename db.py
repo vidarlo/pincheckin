@@ -86,7 +86,8 @@ def register_token(conn, serial):
     sql = '''UPDATE token SET serial=%s WHERE serial = -1 AND time>=%s'''
     try:
         cur = conn.cursor()
-        ts = int(time.time() + 90)
+        ts = int(time.time() - 90)
+        print(ts)
         cur.execute(sql, (serial, ts))
         ret = cur.rowcount
         conn.commit()
